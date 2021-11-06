@@ -27,7 +27,6 @@ class AnimatedMovieCardWidget extends StatelessWidget {
           if (pageController.position.haveDimensions) {
             value = (pageController.page ?? 0) - index;
             value = (1 - (value.abs() * 0.1)).clamp(0.0, 1.0);
-            print("This is " + index.toString() + "value = " + value.toString());
             return Align(
               alignment: Alignment.topCenter,
               child: SizedBox(
@@ -39,7 +38,6 @@ class AnimatedMovieCardWidget extends StatelessWidget {
               ),
             );
           } else {
-            print("And this is " + index.toString() + "value = " + value.toString());
             return Align(
               alignment: Alignment.topCenter,
               child: SizedBox(
