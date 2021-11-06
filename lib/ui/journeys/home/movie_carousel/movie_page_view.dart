@@ -2,8 +2,9 @@ import 'package:custom_listview_with_json_data/common/constants/size_constants.d
 import 'package:custom_listview_with_json_data/common/extensions/size_extensions.dart';
 import 'package:custom_listview_with_json_data/common/screenutil/screenutil.dart';
 import 'package:custom_listview_with_json_data/domain/entities/movie_entity.dart';
-import 'package:custom_listview_with_json_data/ui/journeys/home/movie_carousel/movie_card_wiget.dart';
+import 'package:custom_listview_with_json_data/ui/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'animated_movie_card_widget.dart';
 
@@ -57,7 +58,10 @@ class _MoviePageViewState extends State<MoviePageView> {
         },
         pageSnapping: true,
         itemCount: widget.movies.isNotEmpty ? widget.movies.length : 0,
-        onPageChanged: (index) {},
+        onPageChanged: (index) {
+          BlocProvider.of<MovieBackdropBloc>(context)
+              .add(MovieBackdropChangedEvent(widget.movies[index]));
+        },
       ),
     );
   }
