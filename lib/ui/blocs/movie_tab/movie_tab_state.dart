@@ -11,6 +11,11 @@ abstract class MovieTabState extends Equatable {
 
 class MovieTabInitial extends MovieTabState {}
 
+class MovieTabLoading extends MovieTabState {
+  const MovieTabLoading({int currentTabIndex = 0})
+      : super(currentTabIndex: currentTabIndex);
+}
+
 class MovieTabChanged extends MovieTabState {
   final List<MovieEntity> movies;
 
@@ -24,6 +29,7 @@ class MovieTabChanged extends MovieTabState {
 class MovieTabLoadedError extends MovieTabState {
   final AppErrorType appErrorType;
 
-  const MovieTabLoadedError({int currentTabIndex = 0, required this.appErrorType})
+  const MovieTabLoadedError(
+      {int currentTabIndex = 0, required this.appErrorType})
       : super(currentTabIndex: currentTabIndex);
 }
