@@ -2,6 +2,7 @@ import 'package:custom_listview_with_json_data/di/get_it.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_carousel/movie_carousel_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_tab/movie_tab_bloc.dart';
+import 'package:custom_listview_with_json_data/ui/journeys/drawer/navigation_drawer.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/home/movie_tab/movie_tab_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ],
       child: Scaffold(
+        drawer: const TMDBNavigationDrawer(),
         body: BlocBuilder<MovieCarouselBloc, MovieCarouselState>(
           bloc: movieCarouselBloc,
           builder: (context, state) {
