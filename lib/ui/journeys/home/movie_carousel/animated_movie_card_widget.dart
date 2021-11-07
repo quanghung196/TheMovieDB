@@ -28,7 +28,7 @@ class AnimatedMovieCardWidget extends StatelessWidget {
             value = (pageController.page ?? 0) - index;
             value = (1 - (value.abs() * 0.1)).clamp(0.0, 1.0);
             return Align(
-              alignment: Alignment.topCenter,
+              alignment: Alignment.center,
               child: SizedBox(
                 height: Curves.easeIn.transform(value) *
                     ScreenUtil.screenHeight *
@@ -39,7 +39,7 @@ class AnimatedMovieCardWidget extends StatelessWidget {
             );
           } else {
             return Align(
-              alignment: Alignment.topCenter,
+              alignment: Alignment.center,
               child: SizedBox(
                 height:
                     Curves.easeIn.transform(index == 0 ? value : value * 0.9) *

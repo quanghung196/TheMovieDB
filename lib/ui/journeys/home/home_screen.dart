@@ -1,6 +1,8 @@
 import 'package:custom_listview_with_json_data/di/get_it.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_carousel/movie_carousel_bloc.dart';
+import 'package:custom_listview_with_json_data/ui/blocs/movie_tab/movie_tab_bloc.dart';
+import 'package:custom_listview_with_json_data/ui/journeys/home/movie_tab/movie_tab_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late MovieCarouselBloc movieCarouselBloc;
   late MovieBackdropBloc movieBackdropBloc;
+  late MovieTabBloc movieTabBloc;
 
   @override
   void initState() {
@@ -25,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     movieCarouselBloc.add(const CarouselLoadEvent());
 
     movieBackdropBloc = movieCarouselBloc.movieBackdropBloc;
+    movieTabBloc = getItInstance<MovieTabBloc>();
   }
 
   @override
@@ -32,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
     movieCarouselBloc.close();
     movieBackdropBloc.close();
+    movieTabBloc.close();
   }
 
   @override
@@ -43,7 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         BlocProvider(
           create: (context) => movieBackdropBloc,
-        )
+        ),
+        BlocProvider(
+          create: (context) => movieTabBloc,
+        ),
       ],
       child: Scaffold(
         body: BlocBuilder<MovieCarouselBloc, MovieCarouselState>(
@@ -64,9 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const FractionallySizedBox(
                     alignment: Alignment.bottomCenter,
                     heightFactor: 0.4,
-                    child: Placeholder(
-                      color: Colors.white,
-                    ),
+                    child: MovieTabWidget(),
                   )
                 ],
               );
