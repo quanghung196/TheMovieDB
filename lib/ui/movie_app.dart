@@ -16,6 +16,7 @@ class TheMovieDBApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'TheMovieDB',
       theme: ThemeData(
+        unselectedWidgetColor: AppColor.royalBlue,
         primaryColor: AppColor.vulcan,
         scaffoldBackgroundColor: AppColor.vulcan,
         visualDensity: VisualDensity.adaptivePlatformDensity,

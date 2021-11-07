@@ -20,7 +20,7 @@ class TMDBAppBar extends StatelessWidget {
       child: Row(
         children: <Widget>[
           IconButton(
-              onPressed: () {},
+              onPressed: () => _openNavigationDrawer(context),
               icon: SvgPicture.asset(
                 'assets/svgs/menu.svg',
                 color: Colors.white,
@@ -42,5 +42,9 @@ class TMDBAppBar extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _openNavigationDrawer(BuildContext context) {
+      Scaffold.of(context).openDrawer();
   }
 }
