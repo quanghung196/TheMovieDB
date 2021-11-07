@@ -8,6 +8,7 @@ import 'package:custom_listview_with_json_data/domain/usecases/get_trending_movi
 import 'package:custom_listview_with_json_data/domain/usecases/get_upcoming_movie_use_case.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_carousel/movie_carousel_bloc.dart';
+import 'package:custom_listview_with_json_data/ui/blocs/movie_tab/movie_tab_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
@@ -34,8 +35,8 @@ Future init() async {
   getItInstance.registerLazySingleton<GetUpcomingMovieUseCase>(
       () => GetUpcomingMovieUseCase(getItInstance()));
 
-  getItInstance.registerLazySingleton<GetPlayingNowMovie>(
-      () => GetPlayingNowMovie(getItInstance()));
+  getItInstance.registerLazySingleton<GetPlayingNowMovieUseCase>(
+      () => GetPlayingNowMovieUseCase(getItInstance()));
 
   getItInstance.registerFactory(
     () => MovieCarouselBloc(
@@ -44,4 +45,9 @@ Future init() async {
   );
 
   getItInstance.registerFactory(() => MovieBackdropBloc());
+
+  getItInstance.registerFactory(() => MovieTabBloc(
+      getPlayingNowMovieUseCase: getItInstance(),
+      getPopularMovieUseCase: getItInstance(),
+      getUpcomingMovieUseCase: getItInstance()));
 }

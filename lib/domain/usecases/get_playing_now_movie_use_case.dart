@@ -5,11 +5,11 @@ import 'package:custom_listview_with_json_data/domain/repositories/movie_reposit
 import 'package:custom_listview_with_json_data/domain/usecases/tmdb_base_use_case.dart';
 import 'package:either_dart/src/either.dart';
 
-class GetPlayingNowMovie extends UseCase<List<MovieEntity>, NoParams> {
+class GetPlayingNowMovieUseCase extends UseCase<List<MovieEntity>, NoParams> {
 
   final MovieRepository _movieRepository;
 
-  GetPlayingNowMovie(this._movieRepository);
+  GetPlayingNowMovieUseCase(this._movieRepository);
 
   @override
   Future<Either<AppError, List<MovieEntity>>> call(NoParams params) async {
