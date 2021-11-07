@@ -28,6 +28,8 @@ class MovieTabBloc extends Bloc<MovieTabEvent, MovieTabState> {
   @override
   Stream<MovieTabState> mapEventToState(MovieTabEvent event) async* {
     if (event is MovieTabChangedEvent) {
+      yield MovieTabLoading(currentTabIndex: event.currentTabIndex);
+      await Future.delayed(const Duration(milliseconds: 500));
       late Either<AppError, List<MovieEntity>> moviesEither;
       switch (event.currentTabIndex) {
         case 0:

@@ -4,6 +4,7 @@ import 'package:custom_listview_with_json_data/ui/blocs/movie_tab/movie_tab_bloc
 import 'package:custom_listview_with_json_data/ui/journeys/home/movie_tab/movie_tab_list_item_builder.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/home/movie_tab/movie_tab_model.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/home/movie_tab/movie_tab_title_widget.dart';
+import 'package:custom_listview_with_json_data/ui/journeys/loading/loading_circle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -49,6 +50,13 @@ class _MovieTabWidgetState extends State<MovieTabWidget>
                   )
               ],
             ),
+            if (state is MovieTabLoading)
+              Expanded(
+                  child: Center(
+                child: LoadingCircle(
+                  size: Sizes.dimen_300.w,
+                ),
+              )),
             if (state is MovieTabChanged)
               Expanded(
                 child: MovieTabListItemBuilder(movies: state.movies),
@@ -59,7 +67,7 @@ class _MovieTabWidgetState extends State<MovieTabWidget>
     });
   }
 
-  void _onTabTapped(int tabIndex){
+  void _onTabTapped(int tabIndex) {
     movieTabBloc.add(MovieTabChangedEvent(tabIndex));
   }
 }
