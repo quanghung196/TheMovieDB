@@ -1,5 +1,8 @@
+import 'package:custom_listview_with_json_data/common/constants/language.dart';
 import 'package:custom_listview_with_json_data/common/constants/size_constants.dart';
+import 'package:custom_listview_with_json_data/common/constants/translation_constants.dart';
 import 'package:custom_listview_with_json_data/common/extensions/size_extensions.dart';
+import 'package:custom_listview_with_json_data/common/extensions/string_extensions.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/drawer/navigation_expanded_list_item.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/drawer/navigation_list_item.dart';
 import 'package:custom_listview_with_json_data/ui/widgets/logo.dart';
@@ -33,18 +36,17 @@ class TMDBNavigationDrawer extends StatelessWidget {
                 height: Sizes.dimen_20.h,
               ),
             ),
-            NavigationListItem(title: 'Favourite Movies', onPressed: () {}),
+            NavigationListItem(title: TranslationConstants.favoriteMovies.translate(context), onPressed: () {}),
             NavigationExpandedListItem(
-                title: 'Language',
-                onPressed: () {},
-                children: const ['English', 'Vietnamese']),
-            NavigationExpandedListItem(
-                title: 'Display Mode',
-                onPressed: () {},
-                children: const ['Dark Mode', 'Light Mode']),
-            NavigationListItem(title: 'Feedback', onPressed: () {}),
-            NavigationListItem(title: 'About us', onPressed: () {}),
-            NavigationListItem(title: 'Log out', onPressed: () {}),
+                title: TranslationConstants.language.translate(context),
+                languages: Languages.languagesList),
+            // NavigationExpandedListItem(
+            //     title: TranslationConstants.displayMode.translate(context),
+            //     onPressed: () {},
+            //     children: const ['Dark Mode', 'Light Mode']),
+            NavigationListItem(title: TranslationConstants.feedback.translate(context), onPressed: () {}),
+            NavigationListItem(title: TranslationConstants.about.translate(context), onPressed: () {}),
+            NavigationListItem(title: TranslationConstants.logout.translate(context), onPressed: () {}),
           ],
         ),
       ),

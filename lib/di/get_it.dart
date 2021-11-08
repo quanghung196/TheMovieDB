@@ -6,6 +6,7 @@ import 'package:custom_listview_with_json_data/domain/usecases/get_playing_now_m
 import 'package:custom_listview_with_json_data/domain/usecases/get_popular_movie_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_trending_movie_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_upcoming_movie_use_case.dart';
+import 'package:custom_listview_with_json_data/ui/blocs/app_language/app_language_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_carousel/movie_carousel_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_tab/movie_tab_bloc.dart';
@@ -50,4 +51,6 @@ Future init() async {
       getPlayingNowMovieUseCase: getItInstance(),
       getPopularMovieUseCase: getItInstance(),
       getUpcomingMovieUseCase: getItInstance()));
+
+  getItInstance.registerLazySingleton<AppLanguageBloc>(() => AppLanguageBloc());
 }
