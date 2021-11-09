@@ -8,6 +8,9 @@ import 'package:custom_listview_with_json_data/ui/journeys/drawer/navigation_lis
 import 'package:custom_listview_with_json_data/ui/widgets/logo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wiredash/wiredash.dart';
+
+import '../../about_app_dialog.dart';
 
 class TMDBNavigationDrawer extends StatelessWidget {
   const TMDBNavigationDrawer({Key? key}) : super(key: key);
@@ -48,16 +51,29 @@ class TMDBNavigationDrawer extends StatelessWidget {
             //     children: const ['Dark Mode', 'Light Mode']),
             NavigationListItem(
                 title: TranslationConstants.feedback.translate(context),
-                onPressed: () {}),
+                onPressed: () => _showWiredashScreen(context)),
             NavigationListItem(
                 title: TranslationConstants.about.translate(context),
-                onPressed: () {}),
+                onPressed: () => _showDialog(context)),
             NavigationListItem(
                 title: TranslationConstants.logout.translate(context),
                 onPressed: () {}),
           ],
         ),
       ),
+    );
+  }
+
+  void _showWiredashScreen(BuildContext context) {
+    Navigator.of(context).pop();
+    Wiredash.of(context)!.show();
+  }
+
+  void _showDialog(BuildContext context) {
+    Navigator.of(context).pop();
+    showDialog(
+      context: context,
+      builder: (context) => const AboutAppDialog(),
     );
   }
 }

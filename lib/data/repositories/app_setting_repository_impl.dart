@@ -5,7 +5,7 @@ class AppSettingRepositoryImpl extends AppSettingRepository {
 
   static const String LANGUAGE = "language";
   static const String DISPLAY_MODE = "displayMode";
-  static const String DEFAULT_LANGUAGE_VALUE = "vi";
+  static const String DEFAULT_LANGUAGE_VALUE = "en";
 
   AppSettingRepositoryImpl();
 
