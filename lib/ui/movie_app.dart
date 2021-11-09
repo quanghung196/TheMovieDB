@@ -5,6 +5,7 @@ import 'package:custom_listview_with_json_data/ui/app_localizations.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/app_language/app_language_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/themes/theme_color.dart';
 import 'package:custom_listview_with_json_data/ui/themes/theme_text.dart';
+import 'package:custom_listview_with_json_data/ui/wiredash_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,6 +21,7 @@ class TheMovieDBApp extends StatefulWidget {
 }
 
 class _TheMovieDBAppState extends State<TheMovieDBApp> {
+  final _navigatorKey = GlobalKey<NavigatorState>();
   late AppLanguageBloc appLanguageBloc;
 
   @override
@@ -47,28 +49,32 @@ class _TheMovieDBAppState extends State<TheMovieDBApp> {
           } else {
             locale = Locale(appLanguageBloc.loadPreferredLanguage());
           }
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'TheMovieDB',
-            theme: ThemeData(
-              unselectedWidgetColor: AppColor.royalBlue,
-              primaryColor: AppColor.vulcan,
-              scaffoldBackgroundColor: AppColor.vulcan,
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-              textTheme: ThemeText.getTextTheme(),
-              appBarTheme: const AppBarTheme(elevation: 0),
-            ),
-            supportedLocales: Languages.languagesList
-                .map((e) => Locale(e.languageCode))
-                .toList(),
-            locale: locale,
-            localizationsDelegates: const [
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              AppLocalizations.delegate,
-            ],
-            home: const HomeScreen(),
-          );
+          return WiredashApp(
+              navigatorKey: _navigatorKey,
+              languageCode: locale.languageCode,
+              child: MaterialApp(
+                navigatorKey: _navigatorKey,
+                debugShowCheckedModeBanner: false,
+                title: 'TheMovieDB',
+                theme: ThemeData(
+                  unselectedWidgetColor: AppColor.royalBlue,
+                  primaryColor: AppColor.vulcan,
+                  scaffoldBackgroundColor: AppColor.vulcan,
+                  visualDensity: VisualDensity.adaptivePlatformDensity,
+                  textTheme: ThemeText.getTextTheme(),
+                  appBarTheme: const AppBarTheme(elevation: 0),
+                ),
+                supportedLocales: Languages.languagesList
+                    .map((e) => Locale(e.languageCode))
+                    .toList(),
+                locale: locale,
+                localizationsDelegates: const [
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  AppLocalizations.delegate,
+                ],
+                home: const HomeScreen(),
+              ));
         },
       ),
     );
