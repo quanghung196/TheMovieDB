@@ -1,5 +1,7 @@
 import 'package:custom_listview_with_json_data/common/constants/size_constants.dart';
+import 'package:custom_listview_with_json_data/common/constants/translation_constants.dart';
 import 'package:custom_listview_with_json_data/common/extensions/size_extensions.dart';
+import 'package:custom_listview_with_json_data/common/extensions/string_extensions.dart';
 import 'package:custom_listview_with_json_data/domain/entities/movie_entity.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/home/movie_tab/movie_tab_card_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,11 +31,13 @@ class MovieTabListItemBuilder extends StatelessWidget {
             return Padding(
               padding: EdgeInsets.only(right: Sizes.dimen_14.w),
               child: Center(
-                child: Text(
-                  'View more >>',
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.subtitle1,
-                ),
+                child: InkWell(
+                    onTap: () {},
+                    child: Text(
+                      TranslationConstants.viewMore.translate(context),
+                      maxLines: 1,
+                      style: Theme.of(context).textTheme.subtitle1,
+                    )),
               ),
             );
           }

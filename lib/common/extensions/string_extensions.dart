@@ -1,3 +1,4 @@
+import 'package:custom_listview_with_json_data/ui/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 
@@ -6,7 +7,7 @@ extension StringExtension on String {
     return length > 15 ? '${substring(0, 15)}...' : this;
   }
 
-  // String t(BuildContext context) {
-  //   return AppLocalizations.of(context)?.translate(this) ?? '';
-  // }
+  String translate(BuildContext context) {
+    return AppLocalizations.of(context)?.translate(this) ?? '';
+  }
 }

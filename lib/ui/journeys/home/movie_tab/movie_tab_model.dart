@@ -1,3 +1,5 @@
+import 'package:custom_listview_with_json_data/common/constants/translation_constants.dart';
+
 class MovieTabModel {
   final int tabIndex;
   final String tabTitle;
@@ -8,8 +10,8 @@ class MovieTabModel {
 
 class GenerateMovieTabList {
   static const List<MovieTabModel> movietabModels = [
-    MovieTabModel(tabIndex: 0, tabTitle: 'Popular'),
-    MovieTabModel(tabIndex: 1, tabTitle: 'Now'),
-    MovieTabModel(tabIndex: 2, tabTitle: 'Soon'),
+    MovieTabModel(tabIndex: 0, tabTitle: TranslationConstants.popular),
+    MovieTabModel(tabIndex: 1, tabTitle: TranslationConstants.now),
+    MovieTabModel(tabIndex: 2, tabTitle: TranslationConstants.soon),
   ];
 }

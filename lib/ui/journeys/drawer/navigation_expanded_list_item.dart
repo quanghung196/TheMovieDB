@@ -1,20 +1,22 @@
 import 'package:custom_listview_with_json_data/common/constants/size_constants.dart';
 import 'package:custom_listview_with_json_data/common/extensions/size_extensions.dart';
+import 'package:custom_listview_with_json_data/common/extensions/string_extensions.dart';
+import 'package:custom_listview_with_json_data/domain/entities/language_entity.dart';
+import 'package:custom_listview_with_json_data/ui/blocs/app_language/app_language_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/themes/theme_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'navigation_list_item.dart';
 
 class NavigationExpandedListItem extends StatelessWidget {
   final String title;
-  final Function() onPressed;
-  final List<String> children;
+  final List<LanguageEntity> languages;
 
   const NavigationExpandedListItem({
     Key? key,
     required this.title,
-    required this.onPressed,
-    required this.children,
+    required this.languages,
   }) : super(key: key);
 
   @override
@@ -36,10 +38,13 @@ class NavigationExpandedListItem extends StatelessWidget {
         iconColor: AppColor.royalBlue,
         childrenPadding: EdgeInsets.symmetric(horizontal: Sizes.dimen_16.w),
         children: [
-          for (int i = 0; i < children.length; i++)
+          for (int i = 0; i < languages.length; i++)
             NavigationListItem(
-              title: children[i],
-              onPressed: () {},
+              title: languages[i].languageValue.translate(context),
+              onPressed: () {
+                BlocProvider.of<AppLanguageBloc>(context)
+                    .add(ToggleLanguageEvent(languages[i]));
+              },
             ),
         ],
       ),
