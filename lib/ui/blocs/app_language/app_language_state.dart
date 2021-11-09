@@ -4,6 +4,11 @@ abstract class AppLanguageState extends Equatable {
   const AppLanguageState();
 }
 
+class AppLanguageInitial extends AppLanguageState {
+  @override
+  List<Object> get props => [];
+}
+
 class AppLanguageChanged extends AppLanguageState {
   final Locale locale;
 

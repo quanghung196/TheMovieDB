@@ -31,11 +31,13 @@ class MovieTabListItemBuilder extends StatelessWidget {
             return Padding(
               padding: EdgeInsets.only(right: Sizes.dimen_14.w),
               child: Center(
-                child: Text(
-                  TranslationConstants.viewMore.translate(context),
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.subtitle1,
-                ),
+                child: InkWell(
+                    onTap: () {},
+                    child: Text(
+                      TranslationConstants.viewMore.translate(context),
+                      maxLines: 1,
+                      style: Theme.of(context).textTheme.subtitle1,
+                    )),
               ),
             );
           }

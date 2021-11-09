@@ -1,6 +1,8 @@
 import 'package:custom_listview_with_json_data/data/core/tmdb_api_client.dart';
 import 'package:custom_listview_with_json_data/data/data_sources/tmdb_remote_data_source.dart';
+import 'package:custom_listview_with_json_data/data/repositories/app_setting_repository_impl.dart';
 import 'package:custom_listview_with_json_data/data/repositories/movie_repository_impl.dart';
+import 'package:custom_listview_with_json_data/domain/repositories/app_setting_repository.dart';
 import 'package:custom_listview_with_json_data/domain/repositories/movie_repository.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_playing_now_movie_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_popular_movie_use_case.dart';
@@ -27,6 +29,9 @@ Future init() async {
   getItInstance.registerLazySingleton<MovieRepository>(
       () => MovieRepositoryImpl(getItInstance()));
 
+  getItInstance.registerLazySingleton<AppSettingRepository>(
+          () => AppSettingRepositoryImpl());
+
   getItInstance.registerLazySingleton<GetTrendingMovieUseCase>(
       () => GetTrendingMovieUseCase(getItInstance()));
 
@@ -52,5 +57,5 @@ Future init() async {
       getPopularMovieUseCase: getItInstance(),
       getUpcomingMovieUseCase: getItInstance()));
 
-  getItInstance.registerLazySingleton<AppLanguageBloc>(() => AppLanguageBloc());
+  getItInstance.registerLazySingleton<AppLanguageBloc>(() => AppLanguageBloc(getItInstance()));
 }

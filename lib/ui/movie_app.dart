@@ -45,7 +45,7 @@ class _TheMovieDBAppState extends State<TheMovieDBApp> {
           if (state is AppLanguageChanged) {
             locale = Locale(state.locale.languageCode);
           } else {
-            locale = Locale(Languages.languagesList[0].languageCode);
+            locale = Locale(appLanguageBloc.loadPreferredLanguage());
           }
           return MaterialApp(
             debugShowCheckedModeBanner: false,

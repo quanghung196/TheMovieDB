@@ -36,7 +36,9 @@ class TMDBNavigationDrawer extends StatelessWidget {
                 height: Sizes.dimen_20.h,
               ),
             ),
-            NavigationListItem(title: TranslationConstants.favoriteMovies.translate(context), onPressed: () {}),
+            NavigationListItem(
+                title: TranslationConstants.favoriteMovies.translate(context),
+                onPressed: () {}),
             NavigationExpandedListItem(
                 title: TranslationConstants.language.translate(context),
                 languages: Languages.languagesList),
@@ -44,9 +46,15 @@ class TMDBNavigationDrawer extends StatelessWidget {
             //     title: TranslationConstants.displayMode.translate(context),
             //     onPressed: () {},
             //     children: const ['Dark Mode', 'Light Mode']),
-            NavigationListItem(title: TranslationConstants.feedback.translate(context), onPressed: () {}),
-            NavigationListItem(title: TranslationConstants.about.translate(context), onPressed: () {}),
-            NavigationListItem(title: TranslationConstants.logout.translate(context), onPressed: () {}),
+            NavigationListItem(
+                title: TranslationConstants.feedback.translate(context),
+                onPressed: () {}),
+            NavigationListItem(
+                title: TranslationConstants.about.translate(context),
+                onPressed: () {}),
+            NavigationListItem(
+                title: TranslationConstants.logout.translate(context),
+                onPressed: () {}),
           ],
         ),
       ),
