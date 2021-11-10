@@ -30,9 +30,11 @@ class TranslationConstants {
   static const String signIn = 'signIn';
   static const String wrongUsernamePassword = 'wrongUsernamePassword';
   static const String noNetwork = 'noNetwork';
+  static const String emptyList = 'emptyList';
   static const String logout = 'logout';
   static const String sessionDenied = 'sessionDenied';
   static const String enterTMDbUsername = 'enterTMDbUsername';
   static const String enterPassword = 'enterPassword';
   static const String guestSignIn = 'guestSignIn';
+  static const String refresh = 'refresh';
 }

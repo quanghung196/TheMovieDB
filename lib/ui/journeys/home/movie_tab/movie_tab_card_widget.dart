@@ -3,6 +3,7 @@ import 'package:custom_listview_with_json_data/common/constants/size_constants.d
 import 'package:custom_listview_with_json_data/common/extensions/size_extensions.dart';
 import 'package:custom_listview_with_json_data/common/extensions/string_extensions.dart';
 import 'package:custom_listview_with_json_data/data/core/tmdb_api_constants.dart';
+import 'package:custom_listview_with_json_data/ui/themes/theme_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,11 +11,10 @@ class MovieTabCardWidget extends StatelessWidget {
   final int movieID;
   final String movieTitle, moviePosterPath;
 
-  const MovieTabCardWidget(
-      {Key? key,
-      required this.movieID,
-      required this.movieTitle,
-      required this.moviePosterPath})
+  const MovieTabCardWidget({Key? key,
+    required this.movieID,
+    required this.movieTitle,
+    required this.moviePosterPath})
       : super(key: key);
 
   @override
@@ -26,21 +26,42 @@ class MovieTabCardWidget extends StatelessWidget {
         children: <Widget>[
           Expanded(
               child: ClipRRect(
-            borderRadius: BorderRadius.circular(Sizes.dimen_16.w),
-            child: CachedNetworkImage(
-              imageUrl: '${ApiConstants.BASE_IMAGE_URL}$moviePosterPath',
-              fit: BoxFit.cover,
-            ),
-          )),
+                borderRadius: BorderRadius.circular(Sizes.dimen_16.w),
+                child: CachedNetworkImage(
+                  width: Sizes.dimen_145.w,
+                  imageUrl: '${ApiConstants.BASE_IMAGE_URL}$moviePosterPath',
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => _imageLoadingPlaceHolder(),
+                ),
+              )),
           Padding(
             padding: EdgeInsets.only(top: Sizes.dimen_4.h),
             child: Text(
               movieTitle.intelliTrim(),
               maxLines: 1,
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .bodyText2,
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget _imageLoadingPlaceHolder() {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(Sizes.dimen_16.w),
+      child: Container(
+        width: Sizes.dimen_145.w,
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(begin: Alignment(-1.0, -1),
+                end: Alignment(1.0, 1), colors: [
+                  AppColor.royalBlue, AppColor.violet
+                ]
+            )
+        ),
       ),
     );
   }

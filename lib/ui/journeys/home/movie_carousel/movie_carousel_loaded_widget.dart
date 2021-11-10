@@ -7,11 +7,11 @@ import 'package:flutter/cupertino.dart';
 
 import 'movie_backdrop_widget.dart';
 
-class MovieCarouselWidget extends StatelessWidget {
+class MovieCarouselLoadedWidget extends StatelessWidget {
   final List<MovieEntity> movies;
   final int defaultIndex;
 
-  const MovieCarouselWidget(
+  const MovieCarouselLoadedWidget(
       {Key? key, required this.movies, required this.defaultIndex})
       : assert(defaultIndex >= 0, ' default index can\'t be less than 0'),
         super(key: key);

@@ -8,7 +8,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'movie_carousel/movie_carousel_widget.dart';
+import 'movie_carousel/movie_carousel_load_error_widget.dart';
+import 'movie_carousel/movie_carousel_loaded_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -66,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   FractionallySizedBox(
                     alignment: Alignment.topCenter,
                     heightFactor: 0.6,
-                    child: MovieCarouselWidget(
+                    child: MovieCarouselLoadedWidget(
                       movies: state.movies,
                       defaultIndex: state.defaultIndex,
                     ),
@@ -77,6 +78,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: MovieTabWidget(),
                   )
                 ],
+              );
+            } else if (state is MovieCarouselError) {
+              return MovieCarouselLoadErrorWidget(
+                movieCarouselBloc: movieCarouselBloc,
+                appErrorType: state.errorType,
               );
             } else {
               return const SizedBox.shrink();
