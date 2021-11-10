@@ -1,6 +1,7 @@
 import 'package:custom_listview_with_json_data/common/constants/size_constants.dart';
 import 'package:custom_listview_with_json_data/common/extensions/size_extensions.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_tab/movie_tab_bloc.dart';
+import 'package:custom_listview_with_json_data/ui/journeys/home/movie_tab/movie_tab_empty_list_widget.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/home/movie_tab/movie_tab_list_item_builder.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/home/movie_tab/movie_tab_model.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/home/movie_tab/movie_tab_title_widget.dart';
@@ -59,7 +60,19 @@ class _MovieTabWidgetState extends State<MovieTabWidget>
               )),
             if (state is MovieTabChanged)
               Expanded(
-                child: MovieTabListItemBuilder(movies: state.movies),
+                child: state.movies.isEmpty
+                    ? MovieTabEmptyListWidget(
+                        null,
+                        onButtonPressed: () => _onTabTapped(currentTabIndex),
+                      )
+                    : MovieTabListItemBuilder(movies: state.movies),
+              ),
+            if (state is MovieTabLoadedError)
+              Expanded(
+                child: MovieTabEmptyListWidget(
+                  state.appErrorType,
+                  onButtonPressed: () => _onTabTapped(currentTabIndex),
+                ),
               )
           ],
         ),
@@ -69,5 +82,6 @@ class _MovieTabWidgetState extends State<MovieTabWidget>
 
   void _onTabTapped(int tabIndex) {
     movieTabBloc.add(MovieTabChangedEvent(tabIndex));
+    currentTabIndex = tabIndex;
   }
 }

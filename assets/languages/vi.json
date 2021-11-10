@@ -15,7 +15,7 @@
     "okay": "Okay",
     "retry": "Thử lại",
     "somethingWentWrong": "Có lỗi xảy ra...",
-    "checkNetwork": "Vui lòng kiểm tra kết nối của bạn và nhấn nút Thử lại",
+    "checkNetwork": "Vui lòng kiểm tra kết nối của bạn và nhấn nút Thử lại hoặc báo cáo lại cho chúng tôi bằng cách nhấn nút Phản hồi.",
     "aboutDescription": "Ứng dụng sử dụng TMDb api, chỉ sử dụng cho mục đích học tập, training",
     "noMovies": "Không có kết quả",
     "cast": "Diễn viên",
@@ -28,9 +28,11 @@
     "signIn": "Đăng nhập",
     "logout": "Đăng xuất",
     "wrongUsernamePassword": "Tên đăng nhập hoặc mật khẩu sai",
-    "noNetwork": "Không có kết nối mạng",
+    "noNetwork": "Không có kết nối mạng, vui lòng thử lại",
     "sessionDenied": "Phiên đăng nhập đã hết hạn",
     "enterTMDbUsername": "Nhập tên đăng nhập TMDb...",
     "enterPassword": "Nhập mật khẩu TMDb...",
-    "guestSignIn": "Đăng nhập kiểu khách"
+    "guestSignIn": "Đăng nhập kiểu khách",
+    "emptyList": "Xin lỗi, không có phim nào trong phần này",
+    "refresh": "Làm mới"
 }
