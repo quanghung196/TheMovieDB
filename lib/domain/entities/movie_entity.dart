@@ -7,8 +7,8 @@ class MovieEntity extends Equatable {
   final String backdropPath;
   final String title;
   final num? voteAverage;
-  final String? releaseDate;
-  final String? overview;
+  final String releaseDate;
+  final String overview;
 
   const MovieEntity({
     required this.posterPath,
@@ -17,11 +17,15 @@ class MovieEntity extends Equatable {
     required this.title,
     required this.voteAverage,
     required this.releaseDate,
-    this.overview,
+    required this.overview,
   });
 
-  String loadMoviePoster(String posterPath) {
+  String loadMoviePosterPath() {
     return ApiConstants.BASE_IMAGE_URL + posterPath;
+  }
+
+  String loadMovieBackDropPath() {
+    return ApiConstants.BASE_IMAGE_URL + backdropPath;
   }
 
   @override

@@ -19,7 +19,7 @@
     "aboutDescription": "Ứng dụng sử dụng TMDb api, chỉ sử dụng cho mục đích học tập, training",
     "noMovies": "Không có kết quả",
     "cast": "Diễn viên",
-    "watchTrailers": "Trailer",
+    "watchTrailers": "Xem giới thiệu",
     "noMoviesSearched": "Không có kết quả, hãy tìm kiếm với từ khóa khác",
     "noFavoriteMovie": "Hiện tại không có bộ phim nào trong danh sách",
     "loginToMovieApp": "Đăng nhập ứng dụng bằng tài khoản TMDb",

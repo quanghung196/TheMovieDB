@@ -7,16 +7,16 @@ import 'package:custom_listview_with_json_data/ui/journeys/home/movie_tab/movie_
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MovieTabListItemBuilder extends StatelessWidget {
+class MovieTabItemListWidget extends StatelessWidget {
   final List<MovieEntity> movies;
 
-  const MovieTabListItemBuilder({Key? key, required this.movies})
+  const MovieTabItemListWidget({Key? key, required this.movies})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: Sizes.dimen_6.h),
+      padding: EdgeInsets.symmetric(vertical: Sizes.dimen_6.h, horizontal: Sizes.dimen_8.w),
       child: ListView.separated(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
@@ -43,9 +43,8 @@ class MovieTabListItemBuilder extends StatelessWidget {
           }
           final MovieEntity movie = movies[index];
           return MovieTabCardWidget(
-              movieID: movie.id,
-              movieTitle: movie.title,
-              moviePosterPath: movie.posterPath);
+            movieEntity: movie,
+          );
         },
       ),
     );

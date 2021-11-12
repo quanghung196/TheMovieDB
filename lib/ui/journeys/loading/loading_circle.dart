@@ -1,3 +1,4 @@
+import 'package:custom_listview_with_json_data/ui/themes/theme_color.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 

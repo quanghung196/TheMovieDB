@@ -22,32 +22,32 @@ class TheMovieDBApp extends StatefulWidget {
 
 class _TheMovieDBAppState extends State<TheMovieDBApp> {
   final _navigatorKey = GlobalKey<NavigatorState>();
-  late AppLanguageBloc appLanguageBloc;
+  late AppLanguageBloc _appLanguageBloc;
 
   @override
   void initState() {
     super.initState();
-    appLanguageBloc = getItInstance<AppLanguageBloc>();
+    _appLanguageBloc = getItInstance<AppLanguageBloc>();
   }
 
   @override
   void dispose() {
     super.dispose();
-    appLanguageBloc.close();
+    _appLanguageBloc.close();
   }
 
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init();
     return BlocProvider(
-      create: (context) => appLanguageBloc,
+      create: (context) => _appLanguageBloc,
       child: BlocBuilder<AppLanguageBloc, AppLanguageState>(
         builder: (context, state) {
           late Locale locale;
           if (state is AppLanguageChanged) {
             locale = Locale(state.locale.languageCode);
           } else {
-            locale = Locale(appLanguageBloc.loadPreferredLanguage());
+            locale = Locale(_appLanguageBloc.loadPreferredLanguage());
           }
           return WiredashApp(
               navigatorKey: _navigatorKey,
@@ -61,7 +61,7 @@ class _TheMovieDBAppState extends State<TheMovieDBApp> {
                   primaryColor: AppColor.vulcan,
                   scaffoldBackgroundColor: AppColor.vulcan,
                   visualDensity: VisualDensity.adaptivePlatformDensity,
-                  textTheme: ThemeText.getTextTheme(),
+                  textTheme: ThemeText.getDarkTextTheme(),
                   appBarTheme: const AppBarTheme(elevation: 0),
                 ),
                 supportedLocales: Languages.languagesList

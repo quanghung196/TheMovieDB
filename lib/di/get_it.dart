@@ -4,6 +4,8 @@ import 'package:custom_listview_with_json_data/data/repositories/app_setting_rep
 import 'package:custom_listview_with_json_data/data/repositories/movie_repository_impl.dart';
 import 'package:custom_listview_with_json_data/domain/repositories/app_setting_repository.dart';
 import 'package:custom_listview_with_json_data/domain/repositories/movie_repository.dart';
+import 'package:custom_listview_with_json_data/domain/usecases/get_movie_cast_list_use_case.dart';
+import 'package:custom_listview_with_json_data/domain/usecases/get_movie_trailer_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_playing_now_movie_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_popular_movie_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_trending_movie_use_case.dart';
@@ -11,7 +13,9 @@ import 'package:custom_listview_with_json_data/domain/usecases/get_upcoming_movi
 import 'package:custom_listview_with_json_data/ui/blocs/app_language/app_language_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_carousel/movie_carousel_bloc.dart';
+import 'package:custom_listview_with_json_data/ui/blocs/movie_cast_list/movie_cast_list_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_tab/movie_tab_bloc.dart';
+import 'package:custom_listview_with_json_data/ui/blocs/movie_trailer/movie_trailer_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
@@ -30,8 +34,9 @@ Future init() async {
       () => MovieRepositoryImpl(getItInstance()));
 
   getItInstance.registerLazySingleton<AppSettingRepository>(
-          () => AppSettingRepositoryImpl());
+      () => AppSettingRepositoryImpl());
 
+  //use case
   getItInstance.registerLazySingleton<GetTrendingMovieUseCase>(
       () => GetTrendingMovieUseCase(getItInstance()));
 
@@ -44,6 +49,13 @@ Future init() async {
   getItInstance.registerLazySingleton<GetPlayingNowMovieUseCase>(
       () => GetPlayingNowMovieUseCase(getItInstance()));
 
+  getItInstance.registerFactory<GetMovieCastListUseCase>(
+      () => GetMovieCastListUseCase(getItInstance()));
+
+  getItInstance.registerFactory<GetMovieTrailerUseCase>(
+      () => GetMovieTrailerUseCase(getItInstance()));
+
+  //bloc
   getItInstance.registerFactory(
     () => MovieCarouselBloc(
         getTrendingMovieUseCase: getItInstance(),
@@ -57,5 +69,13 @@ Future init() async {
       getPopularMovieUseCase: getItInstance(),
       getUpcomingMovieUseCase: getItInstance()));
 
-  getItInstance.registerLazySingleton<AppLanguageBloc>(() => AppLanguageBloc(getItInstance()));
+  getItInstance.registerFactory(() => MovieCastListBloc(
+      getMovieCastListUseCase: getItInstance(),
+      movieTrailerBloc: getItInstance()));
+
+  getItInstance.registerFactory(
+      () => MovieTrailerBloc(getMovieTrailerUseCase: getItInstance()));
+
+  getItInstance.registerLazySingleton<AppLanguageBloc>(
+      () => AppLanguageBloc(getItInstance()));
 }

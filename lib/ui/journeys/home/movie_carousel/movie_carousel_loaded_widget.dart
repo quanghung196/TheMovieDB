@@ -21,7 +21,7 @@ class MovieCarouselLoadedWidget extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        MovieBackDropWidget(),
+        const MovieBackDropWidget(),
         Column(
           children: [
             const TMDBAppBar(),
@@ -29,7 +29,7 @@ class MovieCarouselLoadedWidget extends StatelessWidget {
               movies: movies,
               initialPage: defaultIndex,
             ),
-            MovieDataWidget(),
+            const MovieDataWidget(),
             Separator(),
           ],
         ),

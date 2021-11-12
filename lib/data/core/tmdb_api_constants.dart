@@ -9,4 +9,6 @@ class ApiConstants {
   static const String TRENDING_MOVIE_PATH = "trending/movie/day";
   static const String UPCOMING_MOVIE_PATH = "movie/upcoming";
   static const String PLAYING_NOW_MOVIE_PATH = "movie/now_playing";
+  static const String MOVIE_CAST_PATH = "/movie/%s/credits";
+  static const String MOVIE_VIDEO_PATH = "/movie/%s/videos";
 }

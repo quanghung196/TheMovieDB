@@ -1,5 +1,7 @@
 import 'package:custom_listview_with_json_data/domain/entities/app_error.dart';
+import 'package:custom_listview_with_json_data/domain/entities/cast_entity.dart';
 import 'package:custom_listview_with_json_data/domain/entities/movie_entity.dart';
+import 'package:custom_listview_with_json_data/domain/entities/video_entity.dart';
 import 'package:either_dart/either.dart';
 
 abstract class MovieRepository {
@@ -7,6 +9,8 @@ abstract class MovieRepository {
   Future<Either<AppError, List<MovieEntity>>> getPopularMovie();
   Future<Either<AppError, List<MovieEntity>>> getPlayingNowMovie();
   Future<Either<AppError, List<MovieEntity>>> getUpcomingMovie();
+  Future<Either<AppError, List<CastEntity>>> getMovieCastList(int movieID);
+  Future<Either<AppError, List<VideoEntity>>> getMovieVideoList(int movieID);
   //Future<Either<AppError, MovieDetailEntity>> getMovieDetail(int id);
   // Future<Either<AppError, List<CastEntity>>> getCastCrew(int id);
   // Future<Either<AppError, List<VideoEntity>>> getVideos(int id);

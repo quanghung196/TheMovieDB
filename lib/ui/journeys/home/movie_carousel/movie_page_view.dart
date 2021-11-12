@@ -23,10 +23,12 @@ class MoviePageView extends StatefulWidget {
 
 class _MoviePageViewState extends State<MoviePageView> {
   late PageController _pageController;
+  late List<MovieEntity> _movies;
 
   @override
   void initState() {
     super.initState();
+    _movies = widget.movies;
     _pageController = PageController(
       initialPage: widget.initialPage,
       keepPage: false,
@@ -48,19 +50,18 @@ class _MoviePageViewState extends State<MoviePageView> {
       child: PageView.builder(
         controller: _pageController,
         itemBuilder: (context, index) {
-          final MovieEntity movie = widget.movies[index];
+          final MovieEntity movie = _movies[index];
           return AnimatedMovieCardWidget(
-            movieID: movie.id,
-            moviePosterPath: movie.posterPath,
             index: index,
             pageController: _pageController,
+            movieEntity: movie,
           );
         },
         pageSnapping: true,
-        itemCount: widget.movies.isNotEmpty ? widget.movies.length : 0,
+        itemCount: _movies.isNotEmpty ? _movies.length : 0,
         onPageChanged: (index) {
           BlocProvider.of<MovieBackdropBloc>(context)
-              .add(MovieBackdropChangedEvent(widget.movies[index]));
+              .add(MovieBackdropChangedEvent(_movies[index]));
         },
       ),
     );
