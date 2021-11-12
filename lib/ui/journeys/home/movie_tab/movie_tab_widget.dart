@@ -2,7 +2,7 @@ import 'package:custom_listview_with_json_data/common/constants/size_constants.d
 import 'package:custom_listview_with_json_data/common/extensions/size_extensions.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_tab/movie_tab_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/home/movie_tab/movie_tab_empty_list_widget.dart';
-import 'package:custom_listview_with_json_data/ui/journeys/home/movie_tab/movie_tab_list_item_builder.dart';
+import 'package:custom_listview_with_json_data/ui/journeys/home/movie_tab/movie_tab_item_list_widget.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/home/movie_tab/movie_tab_model.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/home/movie_tab/movie_tab_title_widget.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/loading/loading_circle.dart';
@@ -18,14 +18,14 @@ class MovieTabWidget extends StatefulWidget {
 
 class _MovieTabWidgetState extends State<MovieTabWidget>
     with SingleTickerProviderStateMixin {
-  int currentTabIndex = 0;
+  int _currentTabIndex = 0;
 
   MovieTabBloc get movieTabBloc => BlocProvider.of<MovieTabBloc>(context);
 
   @override
   void initState() {
     super.initState();
-    movieTabBloc.add(MovieTabChangedEvent(currentTabIndex));
+    movieTabBloc.add(MovieTabChangedEvent(_currentTabIndex));
   }
 
   @override
@@ -63,15 +63,15 @@ class _MovieTabWidgetState extends State<MovieTabWidget>
                 child: state.movies.isEmpty
                     ? MovieTabEmptyListWidget(
                         null,
-                        onButtonPressed: () => _onTabTapped(currentTabIndex),
+                        onButtonPressed: () => _onTabTapped(_currentTabIndex),
                       )
-                    : MovieTabListItemBuilder(movies: state.movies),
+                    : MovieTabItemListWidget(movies: state.movies),
               ),
             if (state is MovieTabLoadedError)
               Expanded(
                 child: MovieTabEmptyListWidget(
                   state.appErrorType,
-                  onButtonPressed: () => _onTabTapped(currentTabIndex),
+                  onButtonPressed: () => _onTabTapped(_currentTabIndex),
                 ),
               )
           ],
@@ -82,6 +82,6 @@ class _MovieTabWidgetState extends State<MovieTabWidget>
 
   void _onTabTapped(int tabIndex) {
     movieTabBloc.add(MovieTabChangedEvent(tabIndex));
-    currentTabIndex = tabIndex;
+    _currentTabIndex = tabIndex;
   }
 }

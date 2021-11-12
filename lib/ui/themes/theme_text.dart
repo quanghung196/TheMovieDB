@@ -1,4 +1,3 @@
-
 import 'dart:ui';
 
 import 'package:custom_listview_with_json_data/common/constants/size_constants.dart';
@@ -65,7 +64,7 @@ class ThemeText {
   static TextStyle? get _lightCaption =>
       _darkCaption?.copyWith(color: Colors.white);
 
-  static getTextTheme() => TextTheme(
+  static getDarkTextTheme() => TextTheme(
         headline5: _whiteHeadline5,
         headline6: _whiteHeadline6,
         subtitle1: whiteSubtitle1,
@@ -102,4 +101,9 @@ extension ThemeTextExtension on TextTheme {
 
   TextStyle? get orangeSubtitle1 =>
       subtitle1?.copyWith(color: Colors.orangeAccent);
+
+  TextStyle? get appBarTitleDarkHeadline5 => headline5?.copyWith(
+        fontSize: Sizes.dimen_20.sp,
+        color: Colors.white,
+      );
 }

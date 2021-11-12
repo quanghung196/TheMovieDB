@@ -19,26 +19,26 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late MovieCarouselBloc movieCarouselBloc;
-  late MovieBackdropBloc movieBackdropBloc;
-  late MovieTabBloc movieTabBloc;
+  late MovieCarouselBloc _movieCarouselBloc;
+  late MovieBackdropBloc _movieBackdropBloc;
+  late MovieTabBloc _movieTabBloc;
 
   @override
   void initState() {
     super.initState();
-    movieCarouselBloc = getItInstance<MovieCarouselBloc>();
-    movieCarouselBloc.add(const CarouselLoadEvent());
+    _movieCarouselBloc = getItInstance<MovieCarouselBloc>();
+    _movieCarouselBloc.add(const CarouselLoadEvent());
 
-    movieBackdropBloc = movieCarouselBloc.movieBackdropBloc;
-    movieTabBloc = getItInstance<MovieTabBloc>();
+    _movieBackdropBloc = _movieCarouselBloc.movieBackdropBloc;
+    _movieTabBloc = getItInstance<MovieTabBloc>();
   }
 
   @override
   void dispose() {
     super.dispose();
-    movieCarouselBloc.close();
-    movieBackdropBloc.close();
-    movieTabBloc.close();
+    _movieCarouselBloc.close();
+    _movieBackdropBloc.close();
+    _movieTabBloc.close();
   }
 
   @override
@@ -46,19 +46,19 @@ class _HomeScreenState extends State<HomeScreen> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => movieCarouselBloc,
+          create: (context) => _movieCarouselBloc,
         ),
         BlocProvider(
-          create: (context) => movieBackdropBloc,
+          create: (context) => _movieBackdropBloc,
         ),
         BlocProvider(
-          create: (context) => movieTabBloc,
+          create: (context) => _movieTabBloc,
         ),
       ],
       child: Scaffold(
         drawer: const TMDBNavigationDrawer(),
         body: BlocBuilder<MovieCarouselBloc, MovieCarouselState>(
-          bloc: movieCarouselBloc,
+          bloc: _movieCarouselBloc,
           builder: (context, state) {
             if (state is MovieCarouselLoaded) {
               return Stack(
@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             } else if (state is MovieCarouselError) {
               return MovieCarouselLoadErrorWidget(
-                movieCarouselBloc: movieCarouselBloc,
+                movieCarouselBloc: _movieCarouselBloc,
                 appErrorType: state.errorType,
               );
             } else {

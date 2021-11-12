@@ -1,20 +1,19 @@
 import 'package:custom_listview_with_json_data/common/constants/size_constants.dart';
 import 'package:custom_listview_with_json_data/common/extensions/size_extensions.dart';
 import 'package:custom_listview_with_json_data/common/screenutil/screenutil.dart';
+import 'package:custom_listview_with_json_data/domain/entities/movie_entity.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/home/movie_carousel/movie_card_wiget.dart';
 import 'package:flutter/cupertino.dart';
 
 class AnimatedMovieCardWidget extends StatelessWidget {
   final int index;
-  final int movieID;
-  final String moviePosterPath;
+  final MovieEntity movieEntity;
   final PageController pageController;
 
   const AnimatedMovieCardWidget(
       {Key? key,
       required this.index,
-      required this.movieID,
-      required this.moviePosterPath,
+      required this.movieEntity,
       required this.pageController})
       : super(key: key);
 
@@ -52,6 +51,7 @@ class AnimatedMovieCardWidget extends StatelessWidget {
           }
         },
         child: MovieCardWidget(
-            movieID: movieID, moviePosterPath: moviePosterPath));
+          movieEntity: movieEntity,
+        ));
   }
 }

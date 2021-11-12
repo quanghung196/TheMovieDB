@@ -28,8 +28,7 @@ class MovieBackDropWidget extends StatelessWidget {
                 builder: (context, state) {
               if (state is MovieBackdropChanged) {
                 return CachedNetworkImage(
-                  imageUrl:
-                      '${ApiConstants.BASE_IMAGE_URL}${state.movie.backdropPath}',
+                  imageUrl: state.movie.loadMovieBackDropPath(),
                   fit: BoxFit.fitHeight,
                 );
               }
