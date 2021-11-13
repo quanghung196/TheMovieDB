@@ -37,4 +37,9 @@ class TranslationConstants {
   static const String enterPassword = 'enterPassword';
   static const String guestSignIn = 'guestSignIn';
   static const String refresh = 'refresh';
+  static const String findYourMovie = 'findYourMovie';
+  static const String search = 'search';
+  static const String searchWelcome = 'searchWelcome';
+  static const String searchNoData = 'searchNoData';
+
 }

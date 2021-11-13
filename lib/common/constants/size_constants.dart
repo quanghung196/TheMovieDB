@@ -10,6 +10,7 @@ class Sizes {
   static const double dimen_10 = 10;
   static const double dimen_12 = 12;
   static const double dimen_14 = 14;
+  static const double dimen_15 = 15;
   static const double dimen_16 = 16;
   static const double dimen_18 = 18;
   static const double dimen_20 = 20;
@@ -19,10 +20,12 @@ class Sizes {
   static const double dimen_48 = 48;
   static const double dimen_60 = 60;
   static const double dimen_64 = 64;
+  static const double dimen_70 = 70;
   static const double dimen_80 = 80;
   static const double dimen_100 = 100;
   static const double dimen_105 = 105;
   static const double dimen_110 = 110;
+  static const double dimen_120 = 120;
   static const double dimen_140 = 140;
   static const double dimen_145 = 145;
   static const double dimen_150 = 150;

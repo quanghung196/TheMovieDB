@@ -34,5 +34,9 @@
     "enterPassword": "Enter password here...",
     "guestSignIn": "Guest Sign In",
     "emptyList": "Sorry, no movies under this section",
-    "refresh": "Refresh"
+    "refresh": "Refresh",
+    "findYourMovie": "Find your movie",
+    "search": "Search",
+    "searchWelcome": "Find and enjoy your movies or TV shows. Wish you have great moments with TMDB!!!",
+    "searchNoData": "Sorry, we couldn't find any movie called %s, please enter another keyword"
 }

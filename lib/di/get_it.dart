@@ -8,6 +8,7 @@ import 'package:custom_listview_with_json_data/domain/usecases/get_movie_cast_li
 import 'package:custom_listview_with_json_data/domain/usecases/get_movie_trailer_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_playing_now_movie_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_popular_movie_use_case.dart';
+import 'package:custom_listview_with_json_data/domain/usecases/get_query_movie_list_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_trending_movie_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_upcoming_movie_use_case.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/app_language/app_language_bloc.dart';
@@ -16,6 +17,7 @@ import 'package:custom_listview_with_json_data/ui/blocs/movie_carousel/movie_car
 import 'package:custom_listview_with_json_data/ui/blocs/movie_cast_list/movie_cast_list_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_tab/movie_tab_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_trailer/movie_trailer_bloc.dart';
+import 'package:custom_listview_with_json_data/ui/blocs/search_movie/search_movie_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
@@ -28,54 +30,63 @@ Future init() async {
       .registerLazySingleton<ApiClient>(() => ApiClient(getItInstance()));
 
   getItInstance.registerLazySingleton<TheMovieDBApi>(
-      () => TheMovieDBApiImpl(getItInstance()));
+          () => TheMovieDBApiImpl(getItInstance()));
 
   getItInstance.registerLazySingleton<MovieRepository>(
-      () => MovieRepositoryImpl(getItInstance()));
+          () => MovieRepositoryImpl(getItInstance()));
 
   getItInstance.registerLazySingleton<AppSettingRepository>(
-      () => AppSettingRepositoryImpl());
+          () => AppSettingRepositoryImpl());
 
   //use case
   getItInstance.registerLazySingleton<GetTrendingMovieUseCase>(
-      () => GetTrendingMovieUseCase(getItInstance()));
+          () => GetTrendingMovieUseCase(getItInstance()));
 
   getItInstance.registerLazySingleton<GetPopularMovieUseCase>(
-      () => GetPopularMovieUseCase(getItInstance()));
+          () => GetPopularMovieUseCase(getItInstance()));
 
   getItInstance.registerLazySingleton<GetUpcomingMovieUseCase>(
-      () => GetUpcomingMovieUseCase(getItInstance()));
+          () => GetUpcomingMovieUseCase(getItInstance()));
 
   getItInstance.registerLazySingleton<GetPlayingNowMovieUseCase>(
-      () => GetPlayingNowMovieUseCase(getItInstance()));
+          () => GetPlayingNowMovieUseCase(getItInstance()));
 
   getItInstance.registerFactory<GetMovieCastListUseCase>(
-      () => GetMovieCastListUseCase(getItInstance()));
+          () => GetMovieCastListUseCase(getItInstance()));
 
   getItInstance.registerFactory<GetMovieTrailerUseCase>(
-      () => GetMovieTrailerUseCase(getItInstance()));
+          () => GetMovieTrailerUseCase(getItInstance()));
+
+  getItInstance.registerFactory<GetQueryMovieListUseCase>(
+          () => GetQueryMovieListUseCase(getItInstance()));
 
   //bloc
   getItInstance.registerFactory(
-    () => MovieCarouselBloc(
-        getTrendingMovieUseCase: getItInstance(),
-        movieBackdropBloc: getItInstance()),
+        () =>
+        MovieCarouselBloc(
+            getTrendingMovieUseCase: getItInstance(),
+            movieBackdropBloc: getItInstance()),
   );
 
   getItInstance.registerFactory(() => MovieBackdropBloc());
 
-  getItInstance.registerFactory(() => MovieTabBloc(
-      getPlayingNowMovieUseCase: getItInstance(),
-      getPopularMovieUseCase: getItInstance(),
-      getUpcomingMovieUseCase: getItInstance()));
+  getItInstance.registerFactory(() =>
+      MovieTabBloc(
+          getPlayingNowMovieUseCase: getItInstance(),
+          getPopularMovieUseCase: getItInstance(),
+          getUpcomingMovieUseCase: getItInstance()));
 
-  getItInstance.registerFactory(() => MovieCastListBloc(
-      getMovieCastListUseCase: getItInstance(),
-      movieTrailerBloc: getItInstance()));
+  getItInstance.registerFactory(() =>
+      MovieCastListBloc(
+          getMovieCastListUseCase: getItInstance(),
+          movieTrailerBloc: getItInstance()));
 
   getItInstance.registerFactory(
-      () => MovieTrailerBloc(getMovieTrailerUseCase: getItInstance()));
+          () => MovieTrailerBloc(getMovieTrailerUseCase: getItInstance()));
+
+  getItInstance.registerFactory(
+          () => SearchMovieBloc(getQueryMovieListUseCase: getItInstance()));
 
   getItInstance.registerLazySingleton<AppLanguageBloc>(
-      () => AppLanguageBloc(getItInstance()));
-}
+  () => AppLanguageBloc(getItInstance()));
+  }

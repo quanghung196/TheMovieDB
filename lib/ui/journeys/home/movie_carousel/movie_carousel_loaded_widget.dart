@@ -1,7 +1,7 @@
 import 'package:custom_listview_with_json_data/domain/entities/movie_entity.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/home/movie_carousel/movie_data_widget.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/home/movie_carousel/movie_page_view.dart';
-import 'package:custom_listview_with_json_data/ui/widgets/app_bar.dart';
+import 'package:custom_listview_with_json_data/ui/journeys/home/movie_carousel/app_bar.dart';
 import 'package:custom_listview_with_json_data/ui/widgets/separator.dart';
 import 'package:flutter/cupertino.dart';
 

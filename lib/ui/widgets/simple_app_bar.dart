@@ -7,8 +7,11 @@ import 'package:custom_listview_with_json_data/ui/themes/theme_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class WatchTrailerAppBar extends StatelessWidget {
-  const WatchTrailerAppBar({Key? key}) : super(key: key);
+class SimpleAppBar extends StatelessWidget {
+
+  final String appBarTitle;
+
+  const SimpleAppBar({Key? key, required this.appBarTitle}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,7 @@ class WatchTrailerAppBar extends StatelessWidget {
             ),
           ),
           Text(
-            TranslationConstants.watchTrailers.translate(context),
+            appBarTitle,
             style: Theme.of(context).textTheme.appBarTitleDarkHeadline5,
           )
         ],
