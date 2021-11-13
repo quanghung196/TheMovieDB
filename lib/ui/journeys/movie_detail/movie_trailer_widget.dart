@@ -22,7 +22,7 @@ class MovieTrailerWidget extends StatelessWidget {
     return BlocBuilder<MovieTrailerBloc, MovieTrailerState>(
       bloc: movieTrailerBloc,
       builder: (context, state) {
-        if (state is MovieTrailerLoaded) {
+        if (state is MovieTrailerLoaded && state.videoList.isNotEmpty) {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: Sizes.dimen_64.w),
             child: AppButton(

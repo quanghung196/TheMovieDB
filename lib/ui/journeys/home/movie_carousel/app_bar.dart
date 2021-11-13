@@ -1,6 +1,7 @@
 import 'package:custom_listview_with_json_data/common/constants/size_constants.dart';
 import 'package:custom_listview_with_json_data/common/extensions/size_extensions.dart';
 import 'package:custom_listview_with_json_data/common/screenutil/screenutil.dart';
+import 'package:custom_listview_with_json_data/ui/journeys/search_movie/search_movie_screen.dart';
 import 'package:custom_listview_with_json_data/ui/widgets/logo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,14 @@ class TMDBAppBar extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SearchMovieScreen(),
+                ),
+              );
+            },
             icon: Icon(
               Icons.search,
               color: Colors.white,
@@ -45,6 +53,6 @@ class TMDBAppBar extends StatelessWidget {
   }
 
   void _openNavigationDrawer(BuildContext context) {
-      Scaffold.of(context).openDrawer();
+    Scaffold.of(context).openDrawer();
   }
 }

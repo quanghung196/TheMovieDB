@@ -7,10 +7,7 @@ class MovieResponse {
   final int? totalResults;
 
   MovieResponse(
-      {required this.movieList,
-      this.page,
-      this.totalPages,
-      this.totalResults});
+      {required this.movieList, this.page, this.totalPages, this.totalResults});
 
   factory MovieResponse.fromJson(Map<String, dynamic> json) {
     var movieModels = List<MovieModel>.empty(growable: true);
@@ -50,12 +47,12 @@ class MovieModel extends MovieEntity {
   final int id;
   final bool? video;
   final int? voteCount;
-  final double? voteAverage;
+  final double voteAverage;
   final String title;
   final String releaseDate;
   final String? originalLanguage;
   final String? originalTitle;
-  final List<int>? genreIds;
+  final List<int> genreIds;
   final String backdropPath;
   final bool? adult;
   final String overview;
@@ -67,12 +64,12 @@ class MovieModel extends MovieEntity {
     required this.id,
     this.video,
     this.voteCount,
-    this.voteAverage,
+    required this.voteAverage,
     required this.title,
     required this.releaseDate,
     this.originalLanguage,
     this.originalTitle,
-    this.genreIds,
+    required this.genreIds,
     required this.backdropPath,
     this.adult,
     required this.overview,
@@ -80,14 +77,14 @@ class MovieModel extends MovieEntity {
     this.popularity,
     this.mediaType,
   }) : super(
-          id: id,
-          title: title,
-          backdropPath: backdropPath,
-          posterPath: posterPath,
-          releaseDate: releaseDate,
-          voteAverage: voteAverage,
-          overview: overview,
-        );
+            id: id,
+            title: title,
+            backdropPath: backdropPath,
+            posterPath: posterPath,
+            releaseDate: releaseDate,
+            voteAverage: voteAverage,
+            overview: overview,
+            genreIds: genreIds);
 
   factory MovieModel.fromJson(Map<String, dynamic> json) {
     return MovieModel(

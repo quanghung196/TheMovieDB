@@ -1,6 +1,8 @@
+import 'package:custom_listview_with_json_data/common/constants/translation_constants.dart';
+import 'package:custom_listview_with_json_data/common/extensions/string_extensions.dart';
 import 'package:custom_listview_with_json_data/domain/entities/screen_agruments/movie_watch_trailer_screen_agrument.dart';
 import 'package:custom_listview_with_json_data/domain/entities/video_entity.dart';
-import 'package:custom_listview_with_json_data/ui/journeys/watch_trailer/watch_trailer_app_bar.dart';
+import 'package:custom_listview_with_json_data/ui/widgets/simple_app_bar.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/watch_trailer/watch_trailer_list_video.dart';
 import 'package:custom_listview_with_json_data/ui/themes/theme_color.dart';
 import 'package:flutter/cupertino.dart';
@@ -57,7 +59,7 @@ class _MovieWatchTrailerScreenState extends State<MovieWatchTrailerScreen> {
           builder: (context, player) {
             return Column(
               children: [
-                const WatchTrailerAppBar(),
+                SimpleAppBar(appBarTitle: TranslationConstants.watchTrailers.translate(context),),
                 player,
                 Expanded(
                   child: ListTrailer(

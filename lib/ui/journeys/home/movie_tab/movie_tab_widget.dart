@@ -52,11 +52,9 @@ class _MovieTabWidgetState extends State<MovieTabWidget>
               ],
             ),
             if (state is MovieTabLoading)
-              Expanded(
+              const Expanded(
                   child: Center(
-                child: LoadingCircle(
-                  size: Sizes.dimen_300.w,
-                ),
+                child: LoadingCircle(),
               )),
             if (state is MovieTabChanged)
               Expanded(

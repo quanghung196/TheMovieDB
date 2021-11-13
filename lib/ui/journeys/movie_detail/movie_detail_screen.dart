@@ -34,8 +34,7 @@ class _MovieDetaiScreenState extends State<MovieDetaiScreen> {
     _movieEntity = widget.agrument.movieEntity;
     _movieCastListBloc = getItInstance<MovieCastListBloc>();
     _movieTrailerBloc = _movieCastListBloc.movieTrailerBloc;
-    _movieCastListBloc
-        .add(CastListLoadEvent(movieID: _movieEntity.id));
+    _movieCastListBloc.add(CastListLoadEvent(movieID: _movieEntity.id));
   }
 
   @override
@@ -62,10 +61,8 @@ class _MovieDetaiScreenState extends State<MovieDetaiScreen> {
               if (state is MovieCastListLoading) {
                 return Container(
                     color: AppColor.vulcan,
-                    child: Center(
-                      child: LoadingCircle(
-                        size: ScreenUtil.screenHeight,
-                      ),
+                    child: const Center(
+                      child: LoadingCircle(),
                     ));
               } else if (state is MovieCastLoaded) {
                 return Scaffold(
