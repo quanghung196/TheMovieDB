@@ -41,5 +41,6 @@ class TranslationConstants {
   static const String search = 'search';
   static const String searchWelcome = 'searchWelcome';
   static const String searchNoData = 'searchNoData';
+  static const String favouriteNoData = 'favouriteNoData';
 
 }

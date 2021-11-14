@@ -4,11 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class SearchBackGroundWidget extends StatelessWidget {
+class EmptyListBackGroundWidget extends StatelessWidget {
   final String message;
   final String imagePath;
 
-  const SearchBackGroundWidget(
+  const EmptyListBackGroundWidget(
       {Key? key, required this.message, required this.imagePath})
       : super(key: key);
 

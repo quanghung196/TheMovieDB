@@ -4,6 +4,7 @@ import 'package:custom_listview_with_json_data/common/extensions/num_extensions.
 import 'package:custom_listview_with_json_data/common/extensions/size_extensions.dart';
 import 'package:custom_listview_with_json_data/common/screenutil/screenutil.dart';
 import 'package:custom_listview_with_json_data/domain/entities/movie_entity.dart';
+import 'package:custom_listview_with_json_data/ui/blocs/movie_favourite/movie_favourite_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/movie_detail/movie_detail_app_bar_widget.dart';
 import 'package:custom_listview_with_json_data/ui/themes/theme_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,8 +12,10 @@ import 'package:flutter/material.dart';
 
 class MovieCommonDetailWidget extends StatelessWidget {
   final MovieEntity movieEntity;
+  final MovieFavouriteBloc movieFavouriteBloc;
 
-  const MovieCommonDetailWidget({Key? key, required this.movieEntity})
+  const MovieCommonDetailWidget(
+      {Key? key, required this.movieEntity, required this.movieFavouriteBloc})
       : super(key: key);
 
   @override
@@ -59,7 +62,10 @@ class MovieCommonDetailWidget extends StatelessWidget {
                 top: ScreenUtil.statusBarHeight + Sizes.dimen_4.h,
                 left: 0,
                 right: 0,
-                child: MovieDetailAppBarWidget())
+                child: MovieDetailAppBarWidget(
+                  movieFavouriteBloc: movieFavouriteBloc,
+                  movieEntity: movieEntity,
+                ))
           ],
         ),
         Padding(

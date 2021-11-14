@@ -9,7 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../app_button.dart';
+import '../../widgets/app_button.dart';
 
 class MovieTrailerWidget extends StatelessWidget {
   final MovieTrailerBloc movieTrailerBloc;

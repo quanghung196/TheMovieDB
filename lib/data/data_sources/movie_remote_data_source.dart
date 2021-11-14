@@ -5,7 +5,7 @@ import 'package:custom_listview_with_json_data/data/models/movie_response.dart';
 import 'package:custom_listview_with_json_data/data/models/movie_video_response.dart';
 import 'package:sprintf/sprintf.dart';
 
-abstract class TheMovieDBApi {
+abstract class MovieRemoteDataSource {
   //Future<List<MovieDetail>> getPopularMovieByPage(int page);
   Future<List<MovieModel>> getPopularMovie();
 
@@ -22,10 +22,10 @@ abstract class TheMovieDBApi {
   Future<List<MovieModel>> getQueryMovieList(String query);
 }
 
-class TheMovieDBApiImpl extends TheMovieDBApi {
+class MovieRemoteDataSourceImpl extends MovieRemoteDataSource {
   final ApiClient _client;
 
-  TheMovieDBApiImpl(this._client);
+  MovieRemoteDataSourceImpl(this._client);
 
   // @override
   // Future<List<MovieDetail>> getPopularMovieByPage(int page) {

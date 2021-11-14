@@ -1,7 +1,7 @@
 import 'package:custom_listview_with_json_data/common/constants/translation_constants.dart';
 import 'package:custom_listview_with_json_data/common/extensions/string_extensions.dart';
 import 'package:custom_listview_with_json_data/domain/entities/app_error.dart';
-import 'package:custom_listview_with_json_data/ui/app_button.dart';
+import 'package:custom_listview_with_json_data/ui/widgets/app_button.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

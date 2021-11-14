@@ -5,7 +5,7 @@ import 'package:custom_listview_with_json_data/common/extensions/string_extensio
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'app_button.dart';
+import 'widgets/app_button.dart';
 import 'themes/theme_color.dart';
 
 class AboutAppDialog extends StatelessWidget {

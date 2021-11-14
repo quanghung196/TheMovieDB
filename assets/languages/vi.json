@@ -38,5 +38,6 @@
     "findYourMovie": "Tìm kiếm phim của bạn",
     "search": "Tìm kiếm",
     "searchWelcome": "Tìm và thưởng thức những bộ phim hoặc TV show của bạn. Chúc bạn có những khoảnh khắc tuyệt vời cùng TMDB!!!",
-    "searchNoData": "Xin lỗi, chúng tôi không tìm thấy phim nào được gọi là %s, xin vui lòng nhập từ khóa khác"
+    "searchNoData": "Xin lỗi, chúng tôi không tìm thấy phim nào được gọi là %s, xin vui lòng nhập từ khóa khác",
+    "favouriteNoData": "Không có phim nào trong danh sách của bạn yêu thích, hãy tìm kiếm và lưu lại những bộ phim bạn yêu thíchvào danh sách phim yêu thích của bạn"
 }

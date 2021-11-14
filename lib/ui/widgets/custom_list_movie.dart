@@ -3,17 +3,21 @@ import 'package:custom_listview_with_json_data/common/constants/size_constants.d
 import 'package:custom_listview_with_json_data/common/extensions/size_extensions.dart';
 import 'package:custom_listview_with_json_data/domain/entities/movie_entity.dart';
 import 'package:custom_listview_with_json_data/domain/entities/screen_agruments/movie_detail_screen_agrument.dart';
+import 'package:custom_listview_with_json_data/ui/blocs/movie_favourite/movie_favourite_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/movie_detail/movie_detail_screen.dart';
-import 'package:custom_listview_with_json_data/ui/journeys/search_movie/search_result_chip_view.dart';
 import 'package:custom_listview_with_json_data/ui/themes/theme_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'custom_chip_view.dart';
 
 class MovieListResponseWidget extends StatelessWidget {
   final List<MovieEntity> movieList;
+  final bool reloadListWhenPop;
 
-  const MovieListResponseWidget({Key? key, required this.movieList})
+  const MovieListResponseWidget({Key? key, required this.movieList, this.reloadListWhenPop = false})
       : super(key: key);
 
   @override
@@ -34,7 +38,12 @@ class MovieListResponseWidget extends StatelessWidget {
                   agrument:
                   MovieDetaiScreenAgrument(movieEntity: movieList[index]),
                 )),
-          );
+          ).then((value) {
+            if(reloadListWhenPop){
+              BlocProvider.of<MovieFavouriteBloc>(context)
+                  .add(LoadFavouriteMovieEvent());
+            }
+          });
         }, child: Container(
           margin: EdgeInsets.only(
               left: Sizes.dimen_20.w,
@@ -87,14 +96,14 @@ class MovieListResponseWidget extends StatelessWidget {
                               vertical: Sizes.dimen_2.h),
                           child: Row(
                             children: [
-                              CustomChip(
+                              CustomChipView(
                                   labelText:
                                   movieList[index].voteAverage.toString(),
                                   isContainIcon: true),
                               SizedBox(
                                 width: Sizes.dimen_10.w,
                               ),
-                              CustomChip(
+                              CustomChipView(
                                 labelText:
                                 movieList[index].getYearOfMovie().toString(),
                               )

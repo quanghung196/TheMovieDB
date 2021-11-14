@@ -34,7 +34,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           vertical: Sizes.dimen_4.h, horizontal: Sizes.dimen_20.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(Sizes.dimen_12.w),
-        color: AppColor.darkVulcan,
+        color: AppColor.lightVulcan,
         border: Border.all(color: Colors.black26),
       ),
       padding: EdgeInsets.symmetric(horizontal: Sizes.dimen_16.w),

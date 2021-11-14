@@ -3,9 +3,9 @@ import 'package:custom_listview_with_json_data/main.dart';
 
 class AppSettingRepositoryImpl extends AppSettingRepository {
 
-  static const String LANGUAGE = "language";
-  static const String DISPLAY_MODE = "displayMode";
-  static const String DEFAULT_LANGUAGE_VALUE = "en";
+  static const String LANGUAGE = 'language';
+  static const String DISPLAY_MODE = 'displayMode';
+  static const String DEFAULT_LANGUAGE_VALUE = 'en';
 
   AppSettingRepositoryImpl();
 

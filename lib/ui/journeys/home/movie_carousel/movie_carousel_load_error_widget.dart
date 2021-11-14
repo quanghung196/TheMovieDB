@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wiredash/wiredash.dart';
 
-import '../../../app_button.dart';
+import '../../../widgets/app_button.dart';
 
 class MovieCarouselLoadErrorWidget extends StatelessWidget {
   final MovieCarouselBloc movieCarouselBloc;
