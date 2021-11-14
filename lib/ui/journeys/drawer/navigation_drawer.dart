@@ -5,6 +5,7 @@ import 'package:custom_listview_with_json_data/common/extensions/size_extensions
 import 'package:custom_listview_with_json_data/common/extensions/string_extensions.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/drawer/navigation_expanded_list_item.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/drawer/navigation_list_item.dart';
+import 'package:custom_listview_with_json_data/ui/journeys/favourite_movie/favourite_movie_screen.dart';
 import 'package:custom_listview_with_json_data/ui/widgets/logo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,14 @@ class TMDBNavigationDrawer extends StatelessWidget {
             ),
             NavigationListItem(
                 title: TranslationConstants.favoriteMovies.translate(context),
-                onPressed: () {}),
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const FavouriteMovieScreen()),
+                  );
+                }),
             NavigationExpandedListItem(
                 title: TranslationConstants.language.translate(context),
                 languages: Languages.languagesList),

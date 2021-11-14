@@ -1,15 +1,29 @@
 import 'package:custom_listview_with_json_data/data/core/tmdb_api_constants.dart';
+import 'package:custom_listview_with_json_data/data/models/movie_response.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 
+part 'movie_entity.g.dart';
+
+@HiveType(typeId: 0)
 class MovieEntity extends Equatable {
-  final String posterPath;
+  @HiveField(0)
   final int id;
-  final String backdropPath;
+  @HiveField(1)
   final String title;
-  final num voteAverage;
-  final String releaseDate;
+  @HiveField(2)
+  final String posterPath;
+  @HiveField(3)
+  final String backdropPath;
+  @HiveField(4)
   final String overview;
+  @HiveField(5)
   final List<int> genreIds;
+  @HiveField(6)
+  final num voteAverage;
+  @HiveField(7)
+  final String releaseDate;
+
 
   const MovieEntity({
     required this.posterPath,
@@ -21,6 +35,17 @@ class MovieEntity extends Equatable {
     required this.overview,
     required this.genreIds,
   });
+
+  factory MovieEntity.fromMovieModel (MovieModel model) {
+    return MovieEntity(posterPath: model.posterPath,
+        id: model.id,
+        backdropPath: model.backdropPath,
+        title: model.title,
+        voteAverage: model.voteAverage,
+        releaseDate: model.releaseDate,
+        overview: model.overview,
+        genreIds: model.genreIds);
+  }
 
   static const Map<int, String> movieCategoryMap = {
     28: "Action",

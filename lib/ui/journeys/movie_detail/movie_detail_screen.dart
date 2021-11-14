@@ -3,6 +3,7 @@ import 'package:custom_listview_with_json_data/di/get_it.dart';
 import 'package:custom_listview_with_json_data/domain/entities/movie_entity.dart';
 import 'package:custom_listview_with_json_data/domain/entities/screen_agruments/movie_detail_screen_agrument.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_cast_list/movie_cast_list_bloc.dart';
+import 'package:custom_listview_with_json_data/ui/blocs/movie_favourite/movie_favourite_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_trailer/movie_trailer_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/loading/loading_circle.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/movie_detail/movie_cast_widget.dart';
@@ -27,6 +28,7 @@ class _MovieDetaiScreenState extends State<MovieDetaiScreen> {
   late MovieEntity _movieEntity;
   late MovieCastListBloc _movieCastListBloc;
   late MovieTrailerBloc _movieTrailerBloc;
+  late MovieFavouriteBloc _movieFavouriteBloc;
 
   @override
   void initState() {
@@ -34,6 +36,7 @@ class _MovieDetaiScreenState extends State<MovieDetaiScreen> {
     _movieEntity = widget.agrument.movieEntity;
     _movieCastListBloc = getItInstance<MovieCastListBloc>();
     _movieTrailerBloc = _movieCastListBloc.movieTrailerBloc;
+    _movieFavouriteBloc = _movieCastListBloc.movieFavouriteBloc;
     _movieCastListBloc.add(CastListLoadEvent(movieID: _movieEntity.id));
   }
 
@@ -42,6 +45,7 @@ class _MovieDetaiScreenState extends State<MovieDetaiScreen> {
     super.dispose();
     _movieCastListBloc.close();
     _movieTrailerBloc.close();
+    _movieFavouriteBloc.close();
   }
 
   @override
@@ -53,6 +57,9 @@ class _MovieDetaiScreenState extends State<MovieDetaiScreen> {
           ),
           BlocProvider(
             create: (context) => _movieTrailerBloc,
+          ),
+          BlocProvider(
+            create: (context) => _movieFavouriteBloc,
           ),
         ],
         child: BlocBuilder<MovieCastListBloc, MovieCastListState>(
@@ -73,6 +80,7 @@ class _MovieDetaiScreenState extends State<MovieDetaiScreen> {
                     children: [
                       MovieCommonDetailWidget(
                         movieEntity: _movieEntity,
+                        movieFavouriteBloc: _movieFavouriteBloc,
                       ),
                       MovieCastWidget(
                         castList: state.castList,

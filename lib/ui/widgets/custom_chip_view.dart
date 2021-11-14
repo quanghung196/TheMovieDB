@@ -5,11 +5,11 @@ import 'package:custom_listview_with_json_data/ui/themes/theme_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CustomChip extends StatelessWidget {
+class CustomChipView extends StatelessWidget {
   final String labelText;
   final bool isContainIcon;
 
-  const CustomChip(
+  const CustomChipView(
       {Key? key, required this.labelText, this.isContainIcon = false})
       : super(key: key);
 
@@ -18,29 +18,29 @@ class CustomChip extends StatelessWidget {
     return Container(
         height: Sizes.dimen_18.h,
         decoration: BoxDecoration(
-            color: AppColor.darkVulcan,
+            color: AppColor.lightVulcan,
             borderRadius: BorderRadius.circular(Sizes.dimen_32.w)),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: Sizes.dimen_18.w),
           child: Center(
               child: Row(
-            children: [
-              if (isContainIcon)
-                const Icon(
-                  Icons.star,
-                  size: 16,
-                  color: AppColor.yellowStar,
-                ),
-              Padding(
-                padding:
+                children: [
+                  if (isContainIcon)
+                    const Icon(
+                      Icons.star,
+                      size: 16,
+                      color: AppColor.yellowStar,
+                    ),
+                  Padding(
+                    padding:
                     EdgeInsets.only(left: isContainIcon ? Sizes.dimen_10.w : 0),
-                child: Text(
-                  labelText,
-                  style: Theme.of(context).textTheme.whiteChipLabel,
-                ),
-              )
-            ],
-          )),
+                    child: Text(
+                      labelText,
+                      style: Theme.of(context).textTheme.whiteChipLabel,
+                    ),
+                  )
+                ],
+              )),
         ));
   }
 }
