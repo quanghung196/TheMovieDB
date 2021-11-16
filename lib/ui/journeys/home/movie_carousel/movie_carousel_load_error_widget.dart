@@ -39,15 +39,21 @@ class MovieCarouselLoadErrorWidget extends StatelessWidget {
         ),
         ButtonBar(
           children: [
-            AppButton(
-              buttonTitle: TranslationConstants.retry.translate(context),
-              onButtonPressed: () {
-                movieCarouselBloc.add(const CarouselLoadEvent());
-              },
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: Sizes.dimen_4.h),
+              child: AppButton(
+                buttonTitle: TranslationConstants.retry.translate(context),
+                onButtonPressed: () {
+                  movieCarouselBloc.add(const CarouselLoadEvent());
+                },
+              ),
             ),
-            AppButton(
-                buttonTitle: TranslationConstants.feedback.translate(context),
-                onButtonPressed: () => Wiredash.of(context)?.show()),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: Sizes.dimen_4.h),
+              child: AppButton(
+                  buttonTitle: TranslationConstants.feedback.translate(context),
+                  onButtonPressed: () => Wiredash.of(context)?.show()),
+            ),
           ],
         )
       ]),

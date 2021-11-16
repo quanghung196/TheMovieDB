@@ -73,8 +73,8 @@ class MovieRemoteDataSourceImpl extends MovieRemoteDataSource {
 
   @override
   Future<List<MovieModel>> getQueryMovieList(String query) async {
-    final response = await _client
-        .get(ApiConstants.MOVIE_SEARCH_PATH, params: {'query': query});
+    final response = await _client.get(ApiConstants.MOVIE_SEARCH_PATH,
+        params: {'query': query/*, 'language': 'vi'*/});
     return MovieResponse.fromJson(response).movieList;
   }
 }

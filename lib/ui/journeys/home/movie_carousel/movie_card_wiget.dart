@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:custom_listview_with_json_data/common/constants/route_constant.dart';
 import 'package:custom_listview_with_json_data/common/constants/size_constants.dart';
 import 'package:custom_listview_with_json_data/domain/entities/movie_entity.dart';
 import 'package:custom_listview_with_json_data/domain/entities/screen_agruments/movie_detail_screen_agrument.dart';
@@ -20,14 +21,8 @@ class MovieCardWidget extends StatelessWidget {
       borderRadius: BorderRadius.circular(Sizes.dimen_16.w),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => MovieDetaiScreen(
-                  agrument:
-                  MovieDetaiScreenAgrument(movieEntity: movieEntity),
-                )),
-          );
+          Navigator.of(context).pushNamed(RouteList.MOVIE_DETAIL_SCREEN,
+              arguments: MovieDetaiScreenAgrument(movieEntity: movieEntity));
         },
         child: ClipRRect(
           borderRadius: BorderRadius.circular(Sizes.dimen_16.w),

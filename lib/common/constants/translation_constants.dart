@@ -33,7 +33,7 @@ class TranslationConstants {
   static const String emptyList = 'emptyList';
   static const String logout = 'logout';
   static const String sessionDenied = 'sessionDenied';
-  static const String enterTMDbUsername = 'enterTMDbUsername';
+  static const String enterUsername = 'enterUsername';
   static const String enterPassword = 'enterPassword';
   static const String guestSignIn = 'guestSignIn';
   static const String refresh = 'refresh';
@@ -42,5 +42,7 @@ class TranslationConstants {
   static const String searchWelcome = 'searchWelcome';
   static const String searchNoData = 'searchNoData';
   static const String favouriteNoData = 'favouriteNoData';
+  static const String welcomeBack = 'welcomeBack';
+  static const String or = 'or';
 
 }

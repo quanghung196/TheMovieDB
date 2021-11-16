@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchBarWidget extends StatefulWidget {
-
   const SearchBarWidget({
     Key? key,
   }) : super(key: key);
@@ -18,18 +17,30 @@ class SearchBarWidget extends StatefulWidget {
 }
 
 class _SearchBarWidgetState extends State<SearchBarWidget> {
-  final _controller = TextEditingController();
-  String _inputText = '';
+  late TextEditingController _searchBarController;
 
   static const styleActive = TextStyle(color: Colors.white);
-  static const styleHint = TextStyle(color: Color(0xFF5D5F65));
+  static const styleHint = TextStyle(color: AppColor.hint);
 
+  @override
+  void initState() {
+    super.initState();
+    _searchBarController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _searchBarController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final style = _inputText.isEmpty ? styleHint : styleActive;
+    final style = _searchBarController.text.isEmpty ? styleHint : styleActive;
 
     return Container(
+      alignment: Alignment.center,
+      height: Sizes.dimen_24.h,
       margin: EdgeInsets.symmetric(
           vertical: Sizes.dimen_4.h, horizontal: Sizes.dimen_20.w),
       decoration: BoxDecoration(
@@ -39,38 +50,37 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
       ),
       padding: EdgeInsets.symmetric(horizontal: Sizes.dimen_16.w),
       child: TextField(
-        controller: _controller,
+        controller: _searchBarController,
         decoration: InputDecoration(
           icon: Icon(Icons.search, color: style.color),
-          suffixIcon: _inputText.isNotEmpty
+          suffixIcon: _searchBarController.text.isNotEmpty
               ? GestureDetector(
-                  child: Icon(Icons.close, color: style.color),
+                  child: Icon(
+                    Icons.close,
+                    color: style.color,
+                    size: Sizes.dimen_24.w,
+                  ),
                   onTap: () {
                     FocusScope.of(context).unfocus();
-                    _controller.clear();
-                    setState(() {
-                      _inputText = _controller.text;
-                    });
+                    _searchBarController.clear();
                   },
                 )
               : null,
           hintText: TranslationConstants.search.translate(context),
-          hintStyle: style,
+          hintStyle: styleHint,
           border: InputBorder.none,
         ),
-        style: style,
+        style: styleActive,
         textInputAction: TextInputAction.search,
         onSubmitted: (value) {
-          if(value.isNotEmpty){
+          if (value.isNotEmpty) {
             FocusScope.of(context).unfocus();
             BlocProvider.of<SearchMovieBloc>(context)
                 .add(MovieQuerySubmitedEvent(queryText: value));
           }
         },
         onChanged: (content) {
-          setState(() {
-            _inputText = content;
-          });
+          setState(() {});
         },
       ),
     );

@@ -7,7 +7,7 @@ import 'package:custom_listview_with_json_data/domain/entities/no_params.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_playing_now_movie_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_popular_movie_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_upcoming_movie_use_case.dart';
-import 'package:either_dart/either.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
 part 'movie_tab_event.dart';

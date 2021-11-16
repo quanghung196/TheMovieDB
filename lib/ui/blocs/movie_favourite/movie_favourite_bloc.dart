@@ -36,9 +36,11 @@ class MovieFavouriteBloc
       yield* _checkIfMovieIsFavourited(event.movieID);
     } else if (event is ToggleFavouriteMovieEvent) {
       if (event.isFavourite) {
-        await deleteMovieFromDBUseCase(event.movieEntity.id);
+        await deleteMovieFromDBUseCase(
+            DeleteMovieFromDBParam(movieID: event.movieEntity.id));
       } else {
-        await saveMovieToDBUseCase(event.movieEntity);
+        await saveMovieToDBUseCase(
+            SaveMovieToDBParam(movieEntity: event.movieEntity));
       }
       yield* _checkIfMovieIsFavourited(event.movieEntity.id);
     } else if (event is LoadFavouriteMovieEvent) {
@@ -58,8 +60,8 @@ class MovieFavouriteBloc
   }
 
   Stream<MovieFavouriteState> _checkIfMovieIsFavourited(int movieID) async* {
-    final isMovieFavourited =
-        await checkIfMovieInFavouriteListInDBUseCase(movieID);
+    final isMovieFavourited = await checkIfMovieInFavouriteListInDBUseCase(
+        CheckIfMovieInFavouriteListInDBParam(movieID: movieID));
     yield isMovieFavourited.fold(
         (error) => FavouriteMovieLoadError(appErrorType: error.appErrorType),
         (response) {
