@@ -89,6 +89,8 @@ extension ThemeTextExtension on TextTheme {
 
   TextStyle? get greySubtitle1 => subtitle1?.copyWith(color: Colors.grey);
 
+  TextStyle? get hintSubtitle1 => subtitle1?.copyWith(color: AppColor.hint);
+
   TextStyle? get miniGreySubtitle1 =>
       subtitle1?.copyWith(color: Colors.grey, fontSize: Sizes.dimen_14.sp);
 
@@ -96,6 +98,12 @@ extension ThemeTextExtension on TextTheme {
       subtitle1?.copyWith(color: Colors.white, fontSize: Sizes.dimen_14.sp);
 
   TextStyle? get violetHeadline6 => headline6?.copyWith(color: AppColor.violet);
+
+  TextStyle? get welcomeHeadLine6 => headline6?.copyWith(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+        fontSize: Sizes.dimen_26.sp,
+      );
 
   TextStyle? get vulcanBodyText2 =>
       bodyText2?.copyWith(color: AppColor.vulcan, fontWeight: FontWeight.w600);
@@ -114,7 +122,7 @@ extension ThemeTextExtension on TextTheme {
       subtitle1?.copyWith(color: Colors.white, fontSize: Sizes.dimen_15.sp);
 
   TextStyle? get orangeSubtitle1 =>
-      subtitle1?.copyWith(color: Colors.orangeAccent);
+      subtitle1?.copyWith(color: Colors.orangeAccent, fontSize: Sizes.dimen_15.sp);
 
   TextStyle? get appBarTitleDarkHeadline5 => headline5?.copyWith(
         fontSize: Sizes.dimen_20.sp,

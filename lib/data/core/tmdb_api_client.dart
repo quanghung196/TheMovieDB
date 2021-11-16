@@ -11,15 +11,38 @@ class ApiClient {
 
   ApiClient(this._client);
 
-  Future<dynamic> get(String path, {Map<dynamic, dynamic>? params}) async {
-    var responseJson;
+  dynamic get(String path, {Map<dynamic, dynamic>? params}) async {
     final response = await _client.get(
       getPath(path, params),
       headers: {
         'Content-Type': 'application/json',
       },
     );
-    responseJson = _tmdbResponse(response);
+    var responseJson = _tmdbResponse(response);
+    return responseJson;
+  }
+
+  dynamic post(String path, {Map<dynamic, dynamic>? requestBody}) async {
+    final response = await _client.post(
+      getPath(path, null),
+      body: jsonEncode(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+    var responseJson = _tmdbResponse(response);
+    return responseJson;
+  }
+
+  dynamic delete(String path, {Map<dynamic, dynamic>? requestBody}) async {
+    final response = await _client.delete(
+      getPath(path, null),
+      body: jsonEncode(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+    var responseJson = _tmdbResponse(response);
     return responseJson;
   }
 
@@ -47,6 +70,7 @@ class ApiClient {
       });
     }
 
-    return Uri.parse('${ApiConstants.BASE_URL}$path?api_key=${ApiConstants.API_KEY}$paramsString');
+    return Uri.parse(
+        '${ApiConstants.BASE_URL}$path?api_key=${ApiConstants.API_KEY}$paramsString');
   }
 }

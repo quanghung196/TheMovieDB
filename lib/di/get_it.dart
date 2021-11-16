@@ -1,9 +1,12 @@
 import 'package:custom_listview_with_json_data/data/core/tmdb_api_client.dart';
+import 'package:custom_listview_with_json_data/data/data_sources/authentication_remote_data_source.dart';
 import 'package:custom_listview_with_json_data/data/data_sources/movie_local_data_source.dart';
 import 'package:custom_listview_with_json_data/data/data_sources/movie_remote_data_source.dart';
 import 'package:custom_listview_with_json_data/data/repositories/app_setting_repository_impl.dart';
+import 'package:custom_listview_with_json_data/data/repositories/authentication_repository_impl.dart';
 import 'package:custom_listview_with_json_data/data/repositories/movie_repository_impl.dart';
 import 'package:custom_listview_with_json_data/domain/repositories/app_setting_repository.dart';
+import 'package:custom_listview_with_json_data/domain/repositories/authentication_repository.dart';
 import 'package:custom_listview_with_json_data/domain/repositories/movie_repository.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/check_if_movie_in_favourite_list_in_db_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/delete_movie_from_db_use_case.dart';
@@ -16,7 +19,10 @@ import 'package:custom_listview_with_json_data/domain/usecases/get_query_movie_l
 import 'package:custom_listview_with_json_data/domain/usecases/get_trending_movie_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_upcoming_movie_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/save_movie_to_db_use_case.dart';
+import 'package:custom_listview_with_json_data/domain/usecases/user_login_use_case.dart';
+import 'package:custom_listview_with_json_data/domain/usecases/user_logout_use_case.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/app_language/app_language_bloc.dart';
+import 'package:custom_listview_with_json_data/ui/blocs/login/login_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_carousel/movie_carousel_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/blocs/movie_cast_list/movie_cast_list_bloc.dart';
@@ -41,11 +47,17 @@ Future init() async {
   getItInstance.registerLazySingleton<MovieLocalDataSource>(
       () => MovieLocalDataSourceImpl());
 
+  getItInstance.registerLazySingleton<AuthenticationRemoteDataSource>(
+      () => AuthenticationRemoteDataSourceImpl(getItInstance()));
+
   getItInstance.registerLazySingleton<MovieRepository>(
       () => MovieRepositoryImpl(getItInstance(), getItInstance()));
 
   getItInstance.registerLazySingleton<AppSettingRepository>(
       () => AppSettingRepositoryImpl());
+
+  getItInstance.registerLazySingleton<AuthenticationRepository>(
+      () => AuthenticationRepositoryImpl(getItInstance(), getItInstance()));
 
   //use case
   getItInstance.registerLazySingleton<GetTrendingMovieUseCase>(
@@ -81,6 +93,12 @@ Future init() async {
   getItInstance.registerFactory<CheckIfMovieInFavouriteListInDBUseCase>(
       () => CheckIfMovieInFavouriteListInDBUseCase(getItInstance()));
 
+  getItInstance.registerFactory<UserLoginUseCase>(
+      () => UserLoginUseCase(getItInstance()));
+
+  getItInstance.registerFactory<UserLogoutUseCase>(
+      () => UserLogoutUseCase(getItInstance()));
+
   //bloc
   getItInstance.registerFactory(
     () => MovieCarouselBloc(
@@ -114,4 +132,9 @@ Future init() async {
       checkIfMovieInFavouriteListInDBUseCase: getItInstance(),
       deleteMovieFromDBUseCase: getItInstance(),
       saveMovieToDBUseCase: getItInstance()));
+
+  getItInstance.registerFactory(() => LoginBloc(
+      userLoginUseCase: getItInstance(),
+      appSettingRepository: getItInstance(),
+      userLogoutUseCase: getItInstance()));
 }

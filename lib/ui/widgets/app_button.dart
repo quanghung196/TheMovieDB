@@ -20,14 +20,16 @@ class AppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       decoration: BoxDecoration(
-          gradient: const LinearGradient(
-              colors: [AppColor.royalBlue, AppColor.violet]),
+          gradient: LinearGradient(
+            colors: isButtonEnable
+                ? [AppColor.royalBlue, AppColor.violet]
+                : [Colors.grey, Colors.grey],
+          ),
           borderRadius: BorderRadius.circular(Sizes.dimen_20.w)),
       duration: const Duration(milliseconds: 200),
       curve: Curves.easeIn,
       height: Sizes.dimen_16.h,
       padding: EdgeInsets.symmetric(horizontal: Sizes.dimen_16.w),
-      margin: EdgeInsets.symmetric(vertical: Sizes.dimen_10.h),
       child: TextButton(
         onPressed: onButtonPressed,
         child: Text(

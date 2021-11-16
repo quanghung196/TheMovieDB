@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:custom_listview_with_json_data/common/constants/language.dart';
+import 'package:custom_listview_with_json_data/common/constants/language_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

@@ -1,4 +1,6 @@
+import 'package:custom_listview_with_json_data/common/constants/size_constants.dart';
 import 'package:custom_listview_with_json_data/common/constants/translation_constants.dart';
+import 'package:custom_listview_with_json_data/common/extensions/size_extensions.dart';
 import 'package:custom_listview_with_json_data/common/extensions/string_extensions.dart';
 import 'package:custom_listview_with_json_data/domain/entities/app_error.dart';
 import 'package:custom_listview_with_json_data/ui/widgets/app_button.dart';
@@ -38,9 +40,11 @@ class MovieTabEmptyListWidget extends StatelessWidget {
             message,
             style: Theme.of(context).textTheme.bodyText2,
           ),
-          AppButton(
-              buttonTitle: buttonTitle,
-              onButtonPressed: onButtonPressed)
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: Sizes.dimen_10.h),
+            child: AppButton(
+                buttonTitle: buttonTitle, onButtonPressed: onButtonPressed),
+          ),
         ],
       ),
     );

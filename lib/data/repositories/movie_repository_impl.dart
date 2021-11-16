@@ -9,7 +9,7 @@ import 'package:custom_listview_with_json_data/domain/entities/movie_entity.dart
 import 'package:custom_listview_with_json_data/domain/entities/video_entity.dart';
 import 'package:custom_listview_with_json_data/domain/repositories/movie_repository.dart';
 
-import 'package:either_dart/src/either.dart';
+import 'package:dartz/dartz.dart';
 
 class MovieRepositoryImpl extends MovieRepository {
   final MovieRemoteDataSource remoteDataSource;

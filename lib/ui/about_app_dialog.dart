@@ -56,12 +56,16 @@ class AboutAppDialog extends StatelessWidget {
               'assets/pngs/tmdb_logo.png',
               height: Sizes.dimen_32.h,
             ),
-            AppButton(
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: Sizes.dimen_10.h),
+              child: AppButton(
                 buttonTitle: TranslationConstants.okay.translate(context),
                 isButtonEnable: true,
                 onButtonPressed: () {
                   Navigator.of(context).pop();
-                })
+                },
+              ),
+            ),
           ],
         ),
       ),

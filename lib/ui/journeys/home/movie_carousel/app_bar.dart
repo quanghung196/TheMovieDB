@@ -1,3 +1,4 @@
+import 'package:custom_listview_with_json_data/common/constants/route_constant.dart';
 import 'package:custom_listview_with_json_data/common/constants/size_constants.dart';
 import 'package:custom_listview_with_json_data/common/extensions/size_extensions.dart';
 import 'package:custom_listview_with_json_data/common/screenutil/screenutil.dart';
@@ -34,12 +35,7 @@ class TMDBAppBar extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SearchMovieScreen(),
-                ),
-              );
+              Navigator.of(context).pushNamed(RouteList.SEARCH_SCREEN);
             },
             icon: Icon(
               Icons.search,

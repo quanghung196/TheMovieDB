@@ -2,7 +2,7 @@ import 'package:custom_listview_with_json_data/domain/entities/app_error.dart';
 import 'package:custom_listview_with_json_data/domain/entities/cast_entity.dart';
 import 'package:custom_listview_with_json_data/domain/entities/movie_entity.dart';
 import 'package:custom_listview_with_json_data/domain/entities/video_entity.dart';
-import 'package:either_dart/either.dart';
+import 'package:dartz/dartz.dart';
 
 abstract class MovieRepository {
   Future<Either<AppError, List<MovieEntity>>> getTrendingMovie();

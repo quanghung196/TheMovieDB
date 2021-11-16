@@ -1,14 +1,17 @@
-import 'package:custom_listview_with_json_data/common/constants/language.dart';
+import 'package:custom_listview_with_json_data/common/constants/language_constant.dart';
+import 'package:custom_listview_with_json_data/common/constants/route_constant.dart';
 import 'package:custom_listview_with_json_data/common/constants/size_constants.dart';
 import 'package:custom_listview_with_json_data/common/constants/translation_constants.dart';
 import 'package:custom_listview_with_json_data/common/extensions/size_extensions.dart';
 import 'package:custom_listview_with_json_data/common/extensions/string_extensions.dart';
+import 'package:custom_listview_with_json_data/ui/blocs/login/login_bloc.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/drawer/navigation_expanded_list_item.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/drawer/navigation_list_item.dart';
 import 'package:custom_listview_with_json_data/ui/journeys/favourite_movie/favourite_movie_screen.dart';
 import 'package:custom_listview_with_json_data/ui/widgets/logo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wiredash/wiredash.dart';
 
 import '../../about_app_dialog.dart';
@@ -44,11 +47,7 @@ class TMDBNavigationDrawer extends StatelessWidget {
                 title: TranslationConstants.favoriteMovies.translate(context),
                 onPressed: () {
                   Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const FavouriteMovieScreen()),
-                  );
+                  Navigator.of(context).pushNamed(RouteList.FAVOURITE_SCREEN);
                 }),
             NavigationExpandedListItem(
                 title: TranslationConstants.language.translate(context),
@@ -63,9 +62,19 @@ class TMDBNavigationDrawer extends StatelessWidget {
             NavigationListItem(
                 title: TranslationConstants.about.translate(context),
                 onPressed: () => _showDialog(context)),
-            NavigationListItem(
-                title: TranslationConstants.logout.translate(context),
-                onPressed: () {}),
+            BlocListener<LoginBloc, LoginState>(
+              listenWhen: (previous, current) => current is LogoutSuccess,
+              listener: (context, state) {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    RouteList.LOGIN_SCREEN, (route) => false);
+              },
+              child: NavigationListItem(
+                  title: TranslationConstants.logout.translate(context),
+                  onPressed: () {
+                    BlocProvider.of<LoginBloc>(context)
+                        .add(LogoutFromAppEvent());
+                  }),
+            ),
           ],
         ),
       ),
