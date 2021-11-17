@@ -108,6 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       buttonTitle: TranslationConstants.loginToMovieApp
                           .translate(context),
                       onButtonPressed: () {
+                        FocusScope.of(context).unfocus();
                         BlocProvider.of<LoginBloc>(context).add(LoginToAppEvent(
                             userName: _userNameController.text,
                             password: _passwordController.text));
