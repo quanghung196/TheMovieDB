@@ -1,7 +1,5 @@
-import 'package:custom_listview_with_json_data/domain/entities/movie_entity.dart';
-
 class MovieDetaiScreenAgrument {
-  final MovieEntity movieEntity;
+  final int movieID;
 
-  MovieDetaiScreenAgrument({required this.movieEntity});
+  MovieDetaiScreenAgrument({required this.movieID});
 }

@@ -5,7 +5,8 @@ class MovieCastAndCrewResponse {
   final List<CastModel> castList;
   final List<CrewModel> crewList;
 
-  MovieCastAndCrewResponse({required this.id, required this.castList, required this.crewList});
+  MovieCastAndCrewResponse(
+      {required this.id, required this.castList, required this.crewList});
 
   factory MovieCastAndCrewResponse.fromJson(Map<String, dynamic> json) {
     var castList = List<CastModel>.empty(growable: true);
@@ -13,19 +14,13 @@ class MovieCastAndCrewResponse {
 
     if (json['cast'] != null) {
       json['cast'].forEach((v) {
-        final castModel = CastModel.fromJson(v);
-        if (_isValidCast(castModel)) {
-          castList.add(castModel);
-        }
+        castList.add(CastModel.fromJson(v));
       });
     }
 
     if (json['cast'] != null) {
       json['cast'].forEach((v) {
-        final crewModel = CrewModel.fromJson(v);
-        if (_isValidCrew(crewModel)) {
-          crewList.add(crewModel);
-        }
+        crewList.add(CrewModel.fromJson(v));
       });
     }
 
@@ -45,21 +40,7 @@ class MovieCastAndCrewResponse {
   }
 }
 
-bool _isValidCast(CastModel castModel) {
-  return castModel.creditId.isNotEmpty &&
-      castModel.character.isNotEmpty &&
-      castModel.name.isNotEmpty &&
-      castModel.profilePath.isNotEmpty;
-}
-
-bool _isValidCrew(CrewModel crewModel) {
-  return crewModel.creditId.isNotEmpty &&
-      crewModel.department.isNotEmpty &&
-      crewModel.name.isNotEmpty &&
-      crewModel.profilePath.isNotEmpty;
-}
-
-class CastModel extends CastEntity {
+class CastModel {
   final bool adult;
   final int gender;
   final int id;
@@ -86,13 +67,17 @@ class CastModel extends CastEntity {
       required this.character,
       required this.creditId,
       required this.order})
-      : super(
-            id: id,
-            castId: castId,
-            character: character,
-            creditId: creditId,
-            name: name,
-            profilePath: profilePath);
+      : super();
+
+  CastEntity toEntity() {
+    return CastEntity(
+        id: id,
+        name: name,
+        profilePath: profilePath,
+        castId: castId,
+        character: character,
+        creditId: creditId);
+  }
 
   factory CastModel.fromJson(Map<String, dynamic> json) {
     return CastModel(

@@ -5,7 +5,9 @@ class Languages {
   const Languages._();
 
   static const languagesList = [
-    LanguageEntity(languageCode: 'en', languageValue: TranslationConstants.english),
-    LanguageEntity(languageCode: 'vi', languageValue: TranslationConstants.vietnamese),
+    LanguageEntity(
+        languageCode: 'en', languageValue: TranslationConstants.english),
+    LanguageEntity(
+        languageCode: 'vi', languageValue: TranslationConstants.vietnamese),
   ];
 }

@@ -4,13 +4,12 @@ import 'package:custom_listview_with_json_data/domain/repositories/authenticatio
 import 'package:custom_listview_with_json_data/domain/usecases/tmdb_base_use_case.dart';
 import 'package:dartz/dartz.dart';
 
-class UserLogoutUseCase extends UseCase<void, NoParams>{
-
+class UserLogoutUseCase extends UseCase<void, NoParams> {
   final AuthenticationRepository _authenticationRepository;
 
   UserLogoutUseCase(this._authenticationRepository);
 
   @override
   Future<Either<AppError, void>> call(NoParams params) async =>
-    await _authenticationRepository.userLogout();
+      await _authenticationRepository.userLogout();
 }

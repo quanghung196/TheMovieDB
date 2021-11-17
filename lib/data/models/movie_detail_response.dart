@@ -1,0 +1,257 @@
+import 'package:custom_listview_with_json_data/domain/entities/movie_detail_entity.dart';
+
+class MovieDetailModel {
+  final bool? adult;
+  final String backdropPath;
+  final BelongsToCollection? belongsToCollection;
+  final int? budget;
+  final List<Genres> genres;
+  final String? homepage;
+  final int id;
+  final String? imdbId;
+  final String? originalLanguage;
+  final String? originalTitle;
+  final String overview;
+  final double? popularity;
+  final String posterPath;
+  final List<ProductionCompanies?>? productionCompanies;
+  final List<ProductionCountries?>? productionCountries;
+  final String releaseDate;
+  final int? revenue;
+  final int? runtime;
+  final List<SpokenLanguages?>? spokenLanguages;
+  final String? status;
+  final String? tagline;
+  final String title;
+  final bool? video;
+  final num voteAverage;
+  final int? voteCount;
+
+  MovieDetailModel(
+      {this.adult,
+      required this.backdropPath,
+      this.belongsToCollection,
+      this.budget,
+      required this.genres,
+      this.homepage,
+      required this.id,
+      this.imdbId,
+      this.originalLanguage,
+      this.originalTitle,
+      required this.overview,
+      this.popularity,
+      required this.posterPath,
+      this.productionCompanies,
+      this.productionCountries,
+      required this.releaseDate,
+      this.revenue,
+      this.runtime,
+      this.spokenLanguages,
+      this.status,
+      this.tagline,
+      required this.title,
+      this.video,
+      required this.voteAverage,
+      this.voteCount})
+      : super();
+
+  MovieDetailEntity toEntity() {
+    return MovieDetailEntity(
+        id: id,
+        title: title,
+        posterPath: posterPath,
+        backdropPath: backdropPath,
+        overview: overview,
+        genres: genres,
+        voteAverage: voteAverage,
+        releaseDate: releaseDate);
+  }
+
+  factory MovieDetailModel.fromJson(Map<String, dynamic> json) {
+    var genresList = List<Genres>.empty(growable: true);
+    if (json['genres'] != null) {
+      json['genres'].forEach((v) {
+        genresList.add(Genres.fromJson(v));
+      });
+    }
+
+    return MovieDetailModel(
+      adult: json['adult'],
+      backdropPath: json['backdrop_path'],
+      belongsToCollection: json['belongs_to_collection'] != null
+          ? BelongsToCollection.fromJson(json['belongs_to_collection'])
+          : null,
+      budget: json['budget'],
+      genres: genresList,
+      homepage: json['homepage'],
+      id: json['id'],
+      imdbId: json['imdb_id'],
+      originalLanguage: json['original_language'],
+      originalTitle: json['original_title'],
+      overview: json['overview'],
+      popularity: json['popularity'],
+      posterPath: json['poster_path'] ?? '',
+      releaseDate: json['release_date'],
+      revenue: json['revenue'],
+      runtime: json['runtime'],
+      status: json['status'],
+      tagline: json['tagline'],
+      title: json['title'] ?? '',
+      video: json['video'],
+      voteAverage: json['vote_average'],
+      voteCount: json['vote_count'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['adult'] = adult;
+    data['backdrop_path'] = backdropPath;
+    if (belongsToCollection != null) {
+      data['belongs_to_collection'] = belongsToCollection?.toJson();
+    }
+    data['budget'] = budget;
+    data['genres'] = genres.map((v) => v.toJson()).toList();
+    data['homepage'] = homepage;
+    data['id'] = id;
+    data['imdb_id'] = imdbId;
+    data['original_language'] = originalLanguage;
+    data['original_title'] = originalTitle;
+    data['overview'] = overview;
+    data['popularity'] = popularity;
+    data['poster_path'] = posterPath;
+    if (productionCompanies != null) {
+      data['production_companies'] =
+          productionCompanies?.map((v) => v?.toJson()).toList();
+    }
+    if (productionCountries != null) {
+      data['production_countries'] =
+          productionCountries?.map((v) => v?.toJson()).toList();
+    }
+    data['release_date'] = releaseDate;
+    data['revenue'] = revenue;
+    data['runtime'] = runtime;
+    if (spokenLanguages != null) {
+      data['spoken_languages'] =
+          spokenLanguages?.map((v) => v?.toJson()).toList();
+    }
+    data['status'] = status;
+    data['tagline'] = tagline;
+    data['title'] = title;
+    data['video'] = video;
+    data['vote_average'] = voteAverage;
+    data['vote_count'] = voteCount;
+    return data;
+  }
+
+  @override
+  String toString() {
+    return 'MovieDetailModel{adultte: $adult, backdropPath: $backdropPath, budget: $budget, genres: $genres, id: $id, originalTitle: $originalTitle, overview: $overview, popularity: $popularity, posterPath: $posterPath, releaseDate: $releaseDate, revenue: $revenue, runtime: $runtime, status: $status, title: $title, video: $video, voteAverage: $voteAverage}';
+  }
+}
+
+class BelongsToCollection {
+  late int? id;
+  late String? name;
+  late String? posterPath;
+  late String? backdropPath;
+
+  BelongsToCollection({this.id, this.name, this.posterPath, this.backdropPath});
+
+  BelongsToCollection.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    posterPath = json['poster_path'];
+    backdropPath = json['backdrop_path'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['poster_path'] = posterPath;
+    data['backdrop_path'] = backdropPath;
+    return data;
+  }
+}
+
+class Genres extends GenresEntity {
+  final int id;
+  final String name;
+
+  Genres({required this.id, required this.name}) : super(id: id, name: name);
+
+  factory Genres.fromJson(Map<String, dynamic> json) {
+    return Genres(id: json['id'], name: json['name']);
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    return data;
+  }
+}
+
+class ProductionCompanies {
+  late int? id;
+  late String? logoPath;
+  late String? name;
+  late String? originCountry;
+
+  ProductionCompanies({this.id, this.logoPath, this.name, this.originCountry});
+
+  ProductionCompanies.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    logoPath = json['logo_path'];
+    name = json['name'];
+    originCountry = json['origin_country'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['logo_path'] = logoPath;
+    data['name'] = name;
+    data['origin_country'] = originCountry;
+    return data;
+  }
+}
+
+class ProductionCountries {
+  late String? iso31661;
+  late String? name;
+
+  ProductionCountries({this.iso31661, this.name});
+
+  ProductionCountries.fromJson(Map<String, dynamic> json) {
+    iso31661 = json['iso_3166_1'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['iso_3166_1'] = iso31661;
+    data['name'] = name;
+    return data;
+  }
+}
+
+class SpokenLanguages {
+  late String? iso6391;
+  late String? name;
+
+  SpokenLanguages({this.iso6391, this.name});
+
+  SpokenLanguages.fromJson(Map<String, dynamic> json) {
+    iso6391 = json['iso_639_1'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['iso_639_1'] = iso6391;
+    data['name'] = name;
+    return data;
+  }
+}

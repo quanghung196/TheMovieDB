@@ -3,7 +3,6 @@ import 'package:custom_listview_with_json_data/domain/repositories/authenticatio
 import 'package:custom_listview_with_json_data/domain/usecases/tmdb_base_use_case.dart';
 import 'package:dartz/dartz.dart';
 
-
 class UserLoginUseCase extends UseCase<bool, UserLoginParam> {
   final AuthenticationRepository _authenticationRepository;
 

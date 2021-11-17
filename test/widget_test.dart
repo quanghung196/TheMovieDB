@@ -1,5 +1,4 @@
-
-import 'package:custom_listview_with_json_data/ui/movie_app.dart';
+import 'package:custom_listview_with_json_data/presentation/movie_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

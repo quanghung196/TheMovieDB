@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:custom_listview_with_json_data/data/core/tmdb_api_constants.dart';
 import 'package:custom_listview_with_json_data/data/core/tmdb_exception.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:http/http.dart';
 
 class ApiClient {
@@ -25,6 +24,22 @@ class ApiClient {
   dynamic post(String path, {Map<dynamic, dynamic>? requestBody}) async {
     final response = await _client.post(
       getPath(path, null),
+      body: jsonEncode(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+    var responseJson = _tmdbResponse(response);
+    return responseJson;
+  }
+
+  dynamic postWithParam(String path,
+      {required Map<dynamic, dynamic> params,
+      Map<dynamic, dynamic>? requestBody}) async {
+    print(getPath(path, params));
+    print(requestBody.toString());
+    final response = await _client.post(
+      getPath(path, params),
       body: jsonEncode(requestBody),
       headers: {
         'Content-Type': 'application/json',
@@ -69,7 +84,6 @@ class ApiClient {
         paramsString += '&$key=$value';
       });
     }
-
     return Uri.parse(
         '${ApiConstants.BASE_URL}$path?api_key=${ApiConstants.API_KEY}$paramsString');
   }

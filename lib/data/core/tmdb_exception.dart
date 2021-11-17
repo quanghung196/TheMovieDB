@@ -1,4 +1,3 @@
-
 class TheMovieDBException implements Exception {
   final _message;
   final _prefix;

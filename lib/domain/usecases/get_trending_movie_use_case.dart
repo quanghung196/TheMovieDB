@@ -14,5 +14,4 @@ class GetTrendingMovieUseCase extends UseCase<List<MovieEntity>, NoParams> {
   Future<Either<AppError, List<MovieEntity>>> call(NoParams params) async {
     return await _movieRepository.getTrendingMovie();
   }
-
 }
