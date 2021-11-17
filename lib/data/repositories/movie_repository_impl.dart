@@ -204,7 +204,6 @@ class MovieRepositoryImpl extends MovieRepository {
     } on SocketException {
       return const Left(AppError(AppErrorType.NETWORK));
     } on Exception catch (e) {
-      print(e.toString());
       return const Left(AppError(AppErrorType.API));
     }
   }

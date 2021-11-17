@@ -87,11 +87,10 @@ class MovieFavouriteBloc
       bool isMovieFavourited, MovieEntity movieEntity) async* {
     if (isMovieFavourited) {
       await postFavouriteMovieStatusUseCase(PostFavouriteMovieStatusParam(
-          movieID: movieEntity.id, isFavourite: false));
+          movieID: movieEntity.id, isFavourite: !isMovieFavourited));
     } else {
-      print('false');
       await postFavouriteMovieStatusUseCase(PostFavouriteMovieStatusParam(
-          movieID: movieEntity.id, isFavourite: true));
+          movieID: movieEntity.id, isFavourite: !isMovieFavourited));
     }
     yield* _checkIfMovieIsFavouritedFromApi(movieEntity.id);
   }
