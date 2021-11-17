@@ -6,7 +6,6 @@ import 'package:custom_listview_with_json_data/domain/usecases/tmdb_base_use_cas
 import 'package:dartz/dartz.dart';
 
 class GetPopularMovieUseCase extends UseCase<List<MovieEntity>, NoParams> {
-
   final MovieRepository _movieRepository;
 
   GetPopularMovieUseCase(this._movieRepository);

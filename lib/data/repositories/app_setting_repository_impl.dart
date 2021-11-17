@@ -9,6 +9,8 @@ class AppSettingRepositoryImpl extends AppSettingRepository {
   static const String SESSION_ID = 'sessionID';
   static const String SESSION_ID_GUEST = 'guestLogin';
 
+  static const String ACCOUNT_ID = 'accountID';
+
   AppSettingRepositoryImpl();
 
   //common
@@ -20,7 +22,15 @@ class AppSettingRepositoryImpl extends AppSettingRepository {
     return globalSharedPrefs.getString(key) ?? defaultValue;
   }
 
-  void deleteString(String key) {
+  void saveInt(String key, int value) {
+    globalSharedPrefs.setInt(key, value);
+  }
+
+  int loadInt(String key) {
+    return globalSharedPrefs.getInt(key) ?? 0;
+  }
+
+  void deleteKey(String key) {
     globalSharedPrefs.remove(key);
   }
 
@@ -48,6 +58,21 @@ class AppSettingRepositoryImpl extends AppSettingRepository {
 
   @override
   void deleteSessionID() {
-    deleteString(SESSION_ID);
+    deleteKey(SESSION_ID);
+  }
+
+  @override
+  void deleteAccountID() {
+    deleteKey(ACCOUNT_ID);
+  }
+
+  @override
+  int getAccountID() {
+    return loadInt(ACCOUNT_ID);
+  }
+
+  @override
+  void saveAccountID(int accountID) {
+    saveInt(ACCOUNT_ID, accountID);
   }
 }

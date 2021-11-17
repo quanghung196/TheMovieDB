@@ -1,6 +1,5 @@
-import 'package:custom_listview_with_json_data/ui/app_localizations.dart';
+import 'package:custom_listview_with_json_data/presentation/app_localizations.dart';
 import 'package:flutter/material.dart';
-
 
 extension StringExtension on String {
   String intelliTrim() {

@@ -13,10 +13,7 @@ class MovieResponse {
     var movieModels = List<MovieModel>.empty(growable: true);
     if (json['results'] != null) {
       json['results'].forEach((v) {
-        final movieModel = MovieModel.fromJson(v);
-        if (_isValidMovie(movieModel)) {
-          movieModels.add(movieModel);
-        }
+        movieModels.add(MovieModel.fromJson(v));
       });
     }
     return MovieResponse(
@@ -36,14 +33,7 @@ class MovieResponse {
   }
 }
 
-bool _isValidMovie(MovieModel movieModel) {
-  return movieModel.id != -1 &&
-      movieModel.title.isNotEmpty &&
-      movieModel.backdropPath.isNotEmpty &&
-      movieModel.posterPath.isNotEmpty;
-}
-
-class MovieModel extends MovieEntity {
+class MovieModel {
   final int id;
   final bool? video;
   final int? voteCount;
@@ -76,15 +66,19 @@ class MovieModel extends MovieEntity {
     required this.posterPath,
     this.popularity,
     this.mediaType,
-  }) : super(
-      id: id,
-      title: title,
-      backdropPath: backdropPath,
-      posterPath: posterPath,
-      releaseDate: releaseDate,
-      voteAverage: voteAverage,
-      overview: overview,
-      genreIds: genreIds);
+  }) : super();
+
+  MovieEntity toEntity() {
+    return MovieEntity(
+        posterPath: posterPath,
+        id: id,
+        backdropPath: backdropPath,
+        title: title,
+        voteAverage: voteAverage,
+        releaseDate: releaseDate,
+        overview: overview,
+        genreIds: genreIds);
+  }
 
   factory MovieModel.fromJson(Map<String, dynamic> json) {
     return MovieModel(
@@ -124,10 +118,5 @@ class MovieModel extends MovieEntity {
     data['popularity'] = popularity;
     data['media_type'] = mediaType;
     return data;
-  }
-
-  @override
-  String toString() {
-    return 'MovieDetail{id: $id, video: $video, voteCount: $voteCount, voteAverage: $voteAverage, title: $title, releaseDate: $releaseDate, originalLanguage: $originalLanguage, originalTitle: $originalTitle, genreIds: $genreIds, backdropPath: $backdropPath, adult: $adult, overview: $overview, posterPath: $posterPath, popularity: $popularity, mediaType: $mediaType}';
   }
 }

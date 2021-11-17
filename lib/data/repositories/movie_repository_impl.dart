@@ -1,14 +1,15 @@
 import 'dart:io';
 
+import 'package:custom_listview_with_json_data/data/core/tmdb_exception.dart';
 import 'package:custom_listview_with_json_data/data/data_sources/movie_local_data_source.dart';
 import 'package:custom_listview_with_json_data/data/data_sources/movie_remote_data_source.dart';
-import 'package:custom_listview_with_json_data/data/models/movie_cast_and_crew_response.dart';
-import 'package:custom_listview_with_json_data/data/models/movie_response.dart';
 import 'package:custom_listview_with_json_data/domain/entities/app_error.dart';
+import 'package:custom_listview_with_json_data/domain/entities/cast_entity.dart';
+import 'package:custom_listview_with_json_data/domain/entities/movie_account_state_entity.dart';
+import 'package:custom_listview_with_json_data/domain/entities/movie_detail_entity.dart';
 import 'package:custom_listview_with_json_data/domain/entities/movie_entity.dart';
 import 'package:custom_listview_with_json_data/domain/entities/video_entity.dart';
 import 'package:custom_listview_with_json_data/domain/repositories/movie_repository.dart';
-
 import 'package:dartz/dartz.dart';
 
 class MovieRepositoryImpl extends MovieRepository {
@@ -17,100 +18,13 @@ class MovieRepositoryImpl extends MovieRepository {
 
   MovieRepositoryImpl(this.remoteDataSource, this.localDataSource);
 
-  //remote
-  @override
-  Future<Either<AppError, List<MovieModel>>> getTrendingMovie() async {
-    try {
-      final moviesList = await remoteDataSource.getTrendingMovie();
-      return Right(moviesList);
-    } on SocketException {
-      return const Left(AppError(AppErrorType.NETWORK));
-    } on Exception {
-      return const Left(AppError(AppErrorType.API));
-    }
-  }
-
-  @override
-  Future<Either<AppError, List<MovieModel>>> getUpcomingMovie() async {
-    try {
-      final moviesList = await remoteDataSource.getUpcomingMovieMovie();
-      return Right(moviesList);
-    } on SocketException {
-      return const Left(AppError(AppErrorType.NETWORK));
-    } on Exception {
-      return const Left(AppError(AppErrorType.API));
-    }
-  }
-
-  @override
-  Future<Either<AppError, List<MovieModel>>> getPlayingNowMovie() async {
-    try {
-      final moviesList = await remoteDataSource.getPlayingNowMovie();
-      return Right(moviesList);
-    } on SocketException {
-      return const Left(AppError(AppErrorType.NETWORK));
-    } on Exception {
-      return const Left(AppError(AppErrorType.API));
-    }
-  }
-
-  @override
-  Future<Either<AppError, List<MovieModel>>> getPopularMovie() async {
-    try {
-      final moviesList = await remoteDataSource.getPopularMovie();
-      return Right(moviesList);
-    } on SocketException {
-      return const Left(AppError(AppErrorType.NETWORK));
-    } on Exception {
-      return const Left(AppError(AppErrorType.API));
-    }
-  }
-
-  @override
-  Future<Either<AppError, List<CastModel>>> getMovieCastList(
-      int movieID) async {
-    try {
-      final castList = await remoteDataSource.getMovieCastList(movieID);
-      return Right(castList);
-    } on SocketException {
-      return const Left(AppError(AppErrorType.NETWORK));
-    } on Exception {
-      return const Left(AppError(AppErrorType.API));
-    }
-  }
-
-  @override
-  Future<Either<AppError, List<VideoEntity>>> getMovieVideoList(
-      int movieID) async {
-    try {
-      final videoList = await remoteDataSource.getMovieVideoList(movieID);
-      return Right(videoList);
-    } on SocketException {
-      return const Left(AppError(AppErrorType.NETWORK));
-    } on Exception {
-      return const Left(AppError(AppErrorType.API));
-    }
-  }
-
-  @override
-  Future<Either<AppError, List<MovieEntity>>> getQueryMovieList(
-      String query) async {
-    try {
-      final moviesList = await remoteDataSource.getQueryMovieList(query);
-      return Right(moviesList);
-    } on SocketException {
-      return const Left(AppError(AppErrorType.NETWORK));
-    } on Exception {
-      return const Left(AppError(AppErrorType.API));
-    }
-  }
-
   //local
   @override
   Future<Either<AppError, bool>> checkIfMovieInFavouriteList(
       int movieID) async {
     try {
-      final response = await localDataSource.checkIfMovieInFavouriteList(movieID);
+      final response =
+          await localDataSource.checkIfMovieInFavouriteList(movieID);
       return Right(response);
     } on Exception {
       return const Left(AppError(AppErrorType.DATABASE));
@@ -121,7 +35,8 @@ class MovieRepositoryImpl extends MovieRepository {
   Future<Either<AppError, void>> deleteMovieFromFavouriteList(
       int movieID) async {
     try {
-      final response = await localDataSource.deleteMovieFromFavouriteList(movieID);
+      final response =
+          await localDataSource.deleteMovieFromFavouriteList(movieID);
       return Right(response);
     } on Exception {
       return const Left(AppError(AppErrorType.DATABASE));
@@ -147,6 +62,150 @@ class MovieRepositoryImpl extends MovieRepository {
       return Right(response);
     } on Exception {
       return const Left(AppError(AppErrorType.DATABASE));
+    }
+  }
+
+  //remote
+  @override
+  Future<Either<AppError, List<MovieEntity>>> getTrendingMovie() async {
+    try {
+      final moviesList = await remoteDataSource.getTrendingMovie();
+      return Right(moviesList.map((e) => e.toEntity()).toList());
+    } on SocketException {
+      return const Left(AppError(AppErrorType.NETWORK));
+    } on Exception {
+      return const Left(AppError(AppErrorType.API));
+    }
+  }
+
+  @override
+  Future<Either<AppError, List<MovieEntity>>> getUpcomingMovie() async {
+    try {
+      final moviesList = await remoteDataSource.getUpcomingMovieMovie();
+      return Right(moviesList.map((e) => e.toEntity()).toList());
+    } on SocketException {
+      return const Left(AppError(AppErrorType.NETWORK));
+    } on Exception {
+      return const Left(AppError(AppErrorType.API));
+    }
+  }
+
+  @override
+  Future<Either<AppError, List<MovieEntity>>> getPlayingNowMovie() async {
+    try {
+      final moviesList = await remoteDataSource.getPlayingNowMovie();
+      return Right(moviesList.map((e) => e.toEntity()).toList());
+    } on SocketException {
+      return const Left(AppError(AppErrorType.NETWORK));
+    } on Exception {
+      return const Left(AppError(AppErrorType.API));
+    }
+  }
+
+  @override
+  Future<Either<AppError, List<MovieEntity>>> getPopularMovie() async {
+    try {
+      final moviesList = await remoteDataSource.getPopularMovie();
+      return Right(moviesList.map((e) => e.toEntity()).toList());
+    } on SocketException {
+      return const Left(AppError(AppErrorType.NETWORK));
+    } on Exception {
+      return const Left(AppError(AppErrorType.API));
+    }
+  }
+
+  @override
+  Future<Either<AppError, MovieDetailEntity>> getMovieDetail(
+      int movieID) async {
+    try {
+      final movie = await remoteDataSource.getMovieDetail(movieID);
+      return Right(movie.toEntity());
+    } on SocketException {
+      return const Left(AppError(AppErrorType.NETWORK));
+    } on Exception {
+      return const Left(AppError(AppErrorType.API));
+    }
+  }
+
+  @override
+  Future<Either<AppError, List<CastEntity>>> getMovieCastList(
+      int movieID) async {
+    try {
+      final castList = await remoteDataSource.getMovieCastList(movieID);
+      return Right(castList.map((e) => e.toEntity()).toList());
+    } on SocketException {
+      return const Left(AppError(AppErrorType.NETWORK));
+    } on Exception {
+      return const Left(AppError(AppErrorType.API));
+    }
+  }
+
+  @override
+  Future<Either<AppError, List<VideoEntity>>> getMovieVideoList(
+      int movieID) async {
+    try {
+      final videoList = await remoteDataSource.getMovieVideoList(movieID);
+      return Right(videoList.map((e) => e.toEntity()).toList());
+    } on SocketException {
+      return const Left(AppError(AppErrorType.NETWORK));
+    } on Exception {
+      return const Left(AppError(AppErrorType.API));
+    }
+  }
+
+  @override
+  Future<Either<AppError, List<MovieEntity>>> getQueryMovieList(
+      String query) async {
+    try {
+      final moviesList = await remoteDataSource.getQueryMovieList(query);
+      return Right(moviesList.map((e) => e.toEntity()).toList());
+    } on SocketException {
+      return const Left(AppError(AppErrorType.NETWORK));
+    } on Exception {
+      return const Left(AppError(AppErrorType.API));
+    }
+  }
+
+  @override
+  Future<Either<AppError, List<MovieEntity>>> getFavouriteMovie(
+      int page) async {
+    try {
+      final moviesList = await remoteDataSource.getFavouriteMovie(page);
+      return Right(moviesList.map((e) => e.toEntity()).toList());
+    } on SocketException {
+      return const Left(AppError(AppErrorType.NETWORK));
+    } on Exception {
+      return const Left(AppError(AppErrorType.API));
+    }
+  }
+
+  @override
+  Future<Either<AppError, MovieAccountStateEntity>> getMovieAccountState(
+      int movieID) async {
+    try {
+      final movieAccountState =
+          await remoteDataSource.getMovieAccountState(movieID);
+      return Right(movieAccountState.toEntity());
+    } on SocketException {
+      return const Left(AppError(AppErrorType.NETWORK));
+    } on Exception {
+      return const Left(AppError(AppErrorType.API));
+    }
+  }
+
+  @override
+  Future<Either<AppError, void>> postMovieFavouriteStatus(
+      bool isFavourite, int movieID) async {
+    try {
+      await remoteDataSource.postMovieFavouriteStatus(isFavourite, movieID);
+      return const Right(Unit);
+    } on UnauthorisedException {
+      return const Left(AppError(AppErrorType.UNAUTHORISE));
+    } on SocketException {
+      return const Left(AppError(AppErrorType.NETWORK));
+    } on Exception catch (e) {
+      print(e.toString());
+      return const Left(AppError(AppErrorType.API));
     }
   }
 }

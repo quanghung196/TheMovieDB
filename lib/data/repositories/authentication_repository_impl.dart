@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:custom_listview_with_json_data/data/core/tmdb_exception.dart';
 import 'package:custom_listview_with_json_data/data/data_sources/authentication_remote_data_source.dart';
+import 'package:custom_listview_with_json_data/data/models/authentication/account_infomation_response.dart';
 import 'package:custom_listview_with_json_data/data/models/authentication/request_token_response.dart';
 import 'package:custom_listview_with_json_data/domain/entities/app_error.dart';
 import 'package:custom_listview_with_json_data/domain/repositories/app_setting_repository.dart';
@@ -28,6 +29,19 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
     }
   }
 
+  Future<Either<AppError, AccountInfoModel>> _getAccountID(
+      String sessionID) async {
+    try {
+      final response =
+          await _authenticationRemoteDataSource.getAccountID(sessionID);
+      return Right(response);
+    } on SocketException {
+      return const Left(AppError(AppErrorType.NETWORK));
+    } on Exception {
+      return const Left(AppError(AppErrorType.API));
+    }
+  }
+
   @override
   Future<Either<AppError, bool>> userLogin(
       Map<String, dynamic> requestBody) async {
@@ -44,6 +58,10 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
           .createSession(createSessionWithLogin.toJson());
       if (sessionID != null) {
         _appSettingRepository.saveSessionID(sessionID);
+        final accountInfoEitherResponse = await _getAccountID(sessionID);
+        final accountID =
+            accountInfoEitherResponse.getOrElse(() => AccountInfoModel()).id;
+        _appSettingRepository.saveAccountID(accountID);
         return const Right(true);
       }
       return const Left(AppError(AppErrorType.SESSION_DENIED));
@@ -58,9 +76,11 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
 
   @override
   Future<Either<AppError, void>> userLogout() async {
-    if(_appSettingRepository.getSessionID() != AppSettingRepositoryImpl.SESSION_ID_GUEST){
+    if (_appSettingRepository.getSessionID() !=
+        AppSettingRepositoryImpl.SESSION_ID_GUEST) {
       await _authenticationRemoteDataSource
           .deleteSession(_appSettingRepository.getSessionID());
+      _appSettingRepository.deleteAccountID();
     }
     _appSettingRepository.deleteSessionID();
     return const Right(Unit);

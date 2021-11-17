@@ -10,26 +10,32 @@ import 'package:custom_listview_with_json_data/domain/repositories/authenticatio
 import 'package:custom_listview_with_json_data/domain/repositories/movie_repository.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/check_if_movie_in_favourite_list_in_db_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/delete_movie_from_db_use_case.dart';
-import 'package:custom_listview_with_json_data/domain/usecases/get_favourite_movie_from_db.dart';
+import 'package:custom_listview_with_json_data/domain/usecases/get_favourite_movie_from_db_use_case.dart';
+import 'package:custom_listview_with_json_data/domain/usecases/get_favourite_movie_use_case.dart';
+import 'package:custom_listview_with_json_data/domain/usecases/get_movie_account_state_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_movie_cast_list_use_case.dart';
+import 'package:custom_listview_with_json_data/domain/usecases/get_movie_detail_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_movie_trailer_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_playing_now_movie_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_popular_movie_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_query_movie_list_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_trending_movie_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/get_upcoming_movie_use_case.dart';
+import 'package:custom_listview_with_json_data/domain/usecases/post_movie_favourite_status_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/save_movie_to_db_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/user_login_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/user_logout_use_case.dart';
-import 'package:custom_listview_with_json_data/ui/blocs/app_language/app_language_bloc.dart';
-import 'package:custom_listview_with_json_data/ui/blocs/login/login_bloc.dart';
-import 'package:custom_listview_with_json_data/ui/blocs/movie_backdrop/movie_backdrop_bloc.dart';
-import 'package:custom_listview_with_json_data/ui/blocs/movie_carousel/movie_carousel_bloc.dart';
-import 'package:custom_listview_with_json_data/ui/blocs/movie_cast_list/movie_cast_list_bloc.dart';
-import 'package:custom_listview_with_json_data/ui/blocs/movie_favourite/movie_favourite_bloc.dart';
-import 'package:custom_listview_with_json_data/ui/blocs/movie_tab/movie_tab_bloc.dart';
-import 'package:custom_listview_with_json_data/ui/blocs/movie_trailer/movie_trailer_bloc.dart';
-import 'package:custom_listview_with_json_data/ui/blocs/search_movie/search_movie_bloc.dart';
+import 'package:custom_listview_with_json_data/presentation/blocs/app_language/app_language_bloc.dart';
+import 'package:custom_listview_with_json_data/presentation/blocs/loading/loading_bloc.dart';
+import 'package:custom_listview_with_json_data/presentation/blocs/login/login_bloc.dart';
+import 'package:custom_listview_with_json_data/presentation/blocs/movie_backdrop/movie_backdrop_bloc.dart';
+import 'package:custom_listview_with_json_data/presentation/blocs/movie_carousel/movie_carousel_bloc.dart';
+import 'package:custom_listview_with_json_data/presentation/blocs/movie_cast_list/movie_cast_list_bloc.dart';
+import 'package:custom_listview_with_json_data/presentation/blocs/movie_detail/movie_detail_bloc.dart';
+import 'package:custom_listview_with_json_data/presentation/blocs/movie_favourite/movie_favourite_bloc.dart';
+import 'package:custom_listview_with_json_data/presentation/blocs/movie_tab/movie_tab_bloc.dart';
+import 'package:custom_listview_with_json_data/presentation/blocs/movie_trailer/movie_trailer_bloc.dart';
+import 'package:custom_listview_with_json_data/presentation/blocs/search_movie/search_movie_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
@@ -42,7 +48,7 @@ Future init() async {
       .registerLazySingleton<ApiClient>(() => ApiClient(getItInstance()));
 
   getItInstance.registerLazySingleton<MovieRemoteDataSource>(
-      () => MovieRemoteDataSourceImpl(getItInstance()));
+      () => MovieRemoteDataSourceImpl(getItInstance(), getItInstance()));
 
   getItInstance.registerLazySingleton<MovieLocalDataSource>(
       () => MovieLocalDataSourceImpl());
@@ -72,6 +78,9 @@ Future init() async {
   getItInstance.registerLazySingleton<GetPlayingNowMovieUseCase>(
       () => GetPlayingNowMovieUseCase(getItInstance()));
 
+  getItInstance.registerFactory<GetMovieDetailUseCase>(
+      () => GetMovieDetailUseCase(getItInstance()));
+
   getItInstance.registerFactory<GetMovieCastListUseCase>(
       () => GetMovieCastListUseCase(getItInstance()));
 
@@ -99,9 +108,19 @@ Future init() async {
   getItInstance.registerFactory<UserLogoutUseCase>(
       () => UserLogoutUseCase(getItInstance()));
 
+  getItInstance.registerFactory<GetFavouriteMovieUseCase>(
+      () => GetFavouriteMovieUseCase(getItInstance()));
+
+  getItInstance.registerFactory<GetMovieAccountStateUseCase>(
+      () => GetMovieAccountStateUseCase(getItInstance()));
+
+  getItInstance.registerFactory<PostFavouriteMovieStatusUseCase>(
+      () => PostFavouriteMovieStatusUseCase(getItInstance()));
+
   //bloc
   getItInstance.registerFactory(
     () => MovieCarouselBloc(
+        loadingBloc: getItInstance(),
         getTrendingMovieUseCase: getItInstance(),
         movieBackdropBloc: getItInstance()),
   );
@@ -113,28 +132,41 @@ Future init() async {
       getPopularMovieUseCase: getItInstance(),
       getUpcomingMovieUseCase: getItInstance()));
 
-  getItInstance.registerFactory(() => MovieCastListBloc(
-      getMovieCastListUseCase: getItInstance(),
-      movieTrailerBloc: getItInstance(),
-      movieFavouriteBloc: getItInstance()));
+  getItInstance.registerFactory(
+      () => MovieCastListBloc(getMovieCastListUseCase: getItInstance()));
 
   getItInstance.registerFactory(
       () => MovieTrailerBloc(getMovieTrailerUseCase: getItInstance()));
 
-  getItInstance.registerFactory(
-      () => SearchMovieBloc(getQueryMovieListUseCase: getItInstance()));
+  getItInstance.registerFactory(() => MovieDetailBloc(
+      movieFavouriteBloc: getItInstance(),
+      getMovieDetailUseCase: getItInstance(),
+      movieCastListBloc: getItInstance(),
+      movieTrailerBloc: getItInstance(),
+      loadingBloc: getItInstance()));
+
+  getItInstance.registerFactory(() => SearchMovieBloc(
+      getQueryMovieListUseCase: getItInstance(), loadingBloc: getItInstance()));
+
+  getItInstance.registerLazySingleton<LoadingBloc>(() => LoadingBloc());
 
   getItInstance.registerLazySingleton<AppLanguageBloc>(
       () => AppLanguageBloc(getItInstance()));
 
   getItInstance.registerFactory(() => MovieFavouriteBloc(
+      appSettingRepository: getItInstance(),
       getFavouriteMovieFromDBUseCase: getItInstance(),
       checkIfMovieInFavouriteListInDBUseCase: getItInstance(),
       deleteMovieFromDBUseCase: getItInstance(),
-      saveMovieToDBUseCase: getItInstance()));
+      saveMovieToDBUseCase: getItInstance(),
+      getFavouriteMovieUseCase: getItInstance(),
+      loadingBloc: getItInstance(),
+      getMovieAccountStateUseCase: getItInstance(),
+      postFavouriteMovieStatusUseCase: getItInstance()));
 
   getItInstance.registerFactory(() => LoginBloc(
       userLoginUseCase: getItInstance(),
       appSettingRepository: getItInstance(),
-      userLogoutUseCase: getItInstance()));
+      userLogoutUseCase: getItInstance(),
+      loadingBloc: getItInstance()));
 }

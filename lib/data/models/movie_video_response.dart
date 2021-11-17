@@ -10,10 +10,7 @@ class MovieVideoResponse {
     var videos = List<VideoModel>.empty(growable: true);
     if (json['results'] != null) {
       json['results'].forEach((v) {
-        var _videoModel = VideoModel.fromJson(v);
-        if (_isValidVideo(_videoModel)) {
-          videos.add(VideoModel.fromJson(v));
-        }
+        videos.add(VideoModel.fromJson(v));
       });
     }
 
@@ -22,19 +19,13 @@ class MovieVideoResponse {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = this.id;
+    data['id'] = id;
     data['results'] = videoList.map((v) => v.toJson()).toList();
     return data;
   }
 }
 
-bool _isValidVideo(VideoModel videoModel) {
-  return videoModel.key.isNotEmpty &&
-      videoModel.name.isNotEmpty &&
-      videoModel.type.isNotEmpty;
-}
-
-class VideoModel extends VideoEntity {
+class VideoModel {
   final String? id;
   final String? iso6391;
   final String? iso31661;
@@ -53,11 +44,11 @@ class VideoModel extends VideoEntity {
     this.site,
     this.size,
     required this.type,
-  }) : super(
-    title: name,
-    key: key,
-    type: type,
-  );
+  }) : super();
+
+  VideoEntity toEntity() {
+    return VideoEntity(name: name, key: key);
+  }
 
   factory VideoModel.fromJson(Map<String, dynamic> json) {
     return VideoModel(

@@ -44,5 +44,4 @@ class TranslationConstants {
   static const String favouriteNoData = 'favouriteNoData';
   static const String welcomeBack = 'welcomeBack';
   static const String or = 'or';
-
 }

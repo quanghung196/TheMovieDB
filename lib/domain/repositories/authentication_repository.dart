@@ -3,5 +3,6 @@ import 'package:dartz/dartz.dart';
 
 abstract class AuthenticationRepository {
   Future<Either<AppError, bool>> userLogin(Map<String, dynamic> requestBody);
+
   Future<Either<AppError, void>> userLogout();
 }
