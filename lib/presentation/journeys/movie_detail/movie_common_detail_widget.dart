@@ -56,7 +56,7 @@ class MovieCommonDetailWidget extends StatelessWidget {
                   style: Theme.of(context).textTheme.greySubtitle1,
                 ),
                 trailing: Text(
-                  movieDetailEntity.voteAverage.convertToPercentageString(),
+                  movieDetailEntity.movieVoteAverage(),
                   style: Theme.of(context).textTheme.violetHeadline6,
                 ),
               ),

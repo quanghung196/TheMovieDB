@@ -75,12 +75,13 @@ class MovieListResponseWidget extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.whiteTitle,
                       ),
-                      Text(
-                        movieList[index].getMovieCategory(),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.miniGreySubtitle1,
-                      ),
+                      if (movieList[index].getMovieCategory().isNotEmpty)
+                        Text(
+                          movieList[index].getMovieCategory(),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.miniGreySubtitle1,
+                        ),
                       Expanded(
                         child: Text(
                           movieList[index].overview,
@@ -95,15 +96,17 @@ class MovieListResponseWidget extends StatelessWidget {
                           children: [
                             CustomChipView(
                                 labelText:
-                                    movieList[index].voteAverage.toString(),
+                                    movieList[index].movieVoteAverage(),
                                 isContainIcon: true),
                             SizedBox(
                               width: Sizes.dimen_10.w,
                             ),
-                            CustomChipView(
-                              labelText:
-                                  movieList[index].getYearOfMovie().toString(),
-                            )
+                            if (movieList[index].getYearOfMovie().isNotEmpty)
+                              CustomChipView(
+                                labelText: movieList[index]
+                                    .getYearOfMovie()
+                                    .toString(),
+                              )
                           ],
                         ),
                       ),

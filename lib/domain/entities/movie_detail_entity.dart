@@ -1,3 +1,4 @@
+import 'package:custom_listview_with_json_data/common/extensions/num_extensions.dart';
 import 'package:custom_listview_with_json_data/data/core/tmdb_api_constants.dart';
 import 'package:custom_listview_with_json_data/domain/entities/movie_entity.dart';
 
@@ -40,6 +41,13 @@ class MovieDetailEntity {
       genresID.add(genre.id);
     }
     return genresID;
+  }
+
+  String movieVoteAverage() {
+    if(voteAverage == 0){
+      return 'NR';
+    }
+    return voteAverage.convertToPercentageString();
   }
 
   String loadMoviePosterPath() {

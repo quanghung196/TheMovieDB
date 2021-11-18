@@ -56,6 +56,13 @@ class MovieEntity extends Equatable {
     37: "Western"
   };
 
+  String movieVoteAverage() {
+    if(voteAverage == 0){
+      return 'NR';
+    }
+    return voteAverage.toString();
+  }
+
   String getMovieCategory() {
     String movieCategory = '';
     for (int category in genreIds) {
