@@ -13,12 +13,13 @@ class GetQueryMovieListUseCase
   @override
   Future<Either<AppError, List<MovieEntity>>> call(
       GetQueryMovieListParam param) async {
-    return await _movieRepository.getQueryMovieList(param.query);
+    return await _movieRepository.getQueryMovieList(param.query, param.page);
   }
 }
 
 class GetQueryMovieListParam {
   final String query;
+  final int page;
 
-  GetQueryMovieListParam({required this.query});
+  GetQueryMovieListParam({required this.page, required this.query});
 }

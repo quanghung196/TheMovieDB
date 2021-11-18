@@ -10,11 +10,11 @@ abstract class MovieRepository {
   //remote
   Future<Either<AppError, List<MovieEntity>>> getTrendingMovie();
 
-  Future<Either<AppError, List<MovieEntity>>> getPopularMovie();
+  Future<Either<AppError, List<MovieEntity>>> getPopularMovie(int page);
 
-  Future<Either<AppError, List<MovieEntity>>> getPlayingNowMovie();
+  Future<Either<AppError, List<MovieEntity>>> getPlayingNowMovie(int page);
 
-  Future<Either<AppError, List<MovieEntity>>> getUpcomingMovie();
+  Future<Either<AppError, List<MovieEntity>>> getUpcomingMovie(int page);
 
   Future<Either<AppError, MovieDetailEntity>> getMovieDetail(int movieID);
 
@@ -22,7 +22,7 @@ abstract class MovieRepository {
 
   Future<Either<AppError, List<VideoEntity>>> getMovieVideoList(int movieID);
 
-  Future<Either<AppError, List<MovieEntity>>> getQueryMovieList(String query);
+  Future<Either<AppError, List<MovieEntity>>> getQueryMovieList(String query, int page);
 
   Future<Either<AppError, List<MovieEntity>>> getFavouriteMovie(int page);
 

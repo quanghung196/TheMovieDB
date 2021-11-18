@@ -11,6 +11,7 @@ class ApiClient {
   ApiClient(this._client);
 
   dynamic get(String path, {Map<dynamic, dynamic>? params}) async {
+    print(getPath(path, params));
     final response = await _client.get(
       getPath(path, params),
       headers: {

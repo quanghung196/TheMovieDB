@@ -79,9 +79,9 @@ class MovieRepositoryImpl extends MovieRepository {
   }
 
   @override
-  Future<Either<AppError, List<MovieEntity>>> getUpcomingMovie() async {
+  Future<Either<AppError, List<MovieEntity>>> getUpcomingMovie(int page) async {
     try {
-      final moviesList = await remoteDataSource.getUpcomingMovieMovie();
+      final moviesList = await remoteDataSource.getUpcomingMovieMovie(page);
       return Right(moviesList.map((e) => e.toEntity()).toList());
     } on SocketException {
       return const Left(AppError(AppErrorType.NETWORK));
@@ -91,9 +91,10 @@ class MovieRepositoryImpl extends MovieRepository {
   }
 
   @override
-  Future<Either<AppError, List<MovieEntity>>> getPlayingNowMovie() async {
+  Future<Either<AppError, List<MovieEntity>>> getPlayingNowMovie(
+      int page) async {
     try {
-      final moviesList = await remoteDataSource.getPlayingNowMovie();
+      final moviesList = await remoteDataSource.getPlayingNowMovie(page);
       return Right(moviesList.map((e) => e.toEntity()).toList());
     } on SocketException {
       return const Left(AppError(AppErrorType.NETWORK));
@@ -103,9 +104,9 @@ class MovieRepositoryImpl extends MovieRepository {
   }
 
   @override
-  Future<Either<AppError, List<MovieEntity>>> getPopularMovie() async {
+  Future<Either<AppError, List<MovieEntity>>> getPopularMovie(int page) async {
     try {
-      final moviesList = await remoteDataSource.getPopularMovie();
+      final moviesList = await remoteDataSource.getPopularMovie(page);
       return Right(moviesList.map((e) => e.toEntity()).toList());
     } on SocketException {
       return const Left(AppError(AppErrorType.NETWORK));
@@ -155,9 +156,9 @@ class MovieRepositoryImpl extends MovieRepository {
 
   @override
   Future<Either<AppError, List<MovieEntity>>> getQueryMovieList(
-      String query) async {
+      String query, int page) async {
     try {
-      final moviesList = await remoteDataSource.getQueryMovieList(query);
+      final moviesList = await remoteDataSource.getQueryMovieList(query, page);
       return Right(moviesList.map((e) => e.toEntity()).toList());
     } on SocketException {
       return const Left(AppError(AppErrorType.NETWORK));

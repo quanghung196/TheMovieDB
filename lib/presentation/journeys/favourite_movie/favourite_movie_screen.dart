@@ -1,3 +1,4 @@
+import 'package:custom_listview_with_json_data/common/constants/route_constant.dart';
 import 'package:custom_listview_with_json_data/common/constants/translation_constants.dart';
 import 'package:custom_listview_with_json_data/common/extensions/string_extensions.dart';
 import 'package:custom_listview_with_json_data/di/get_it.dart';
@@ -8,7 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'movie_favourite_list_response_widget.dart';
+import '../../widgets/movie_list_response_widget.dart';
 
 class FavouriteMovieScreen extends StatefulWidget {
   const FavouriteMovieScreen({Key? key}) : super(key: key);
@@ -19,17 +20,20 @@ class FavouriteMovieScreen extends StatefulWidget {
 
 class _FavouriteMovieScreenState extends State<FavouriteMovieScreen> {
   late MovieFavouriteBloc _movieFavouriteBloc;
+  late ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController();
     _movieFavouriteBloc = getItInstance<MovieFavouriteBloc>();
-    _movieFavouriteBloc.add(const LoadFavouriteMovieEvent(page: 1));
+    _movieFavouriteBloc.add(LoadFavouriteMovieEvent());
   }
 
   @override
   void dispose() {
     super.dispose();
+    _scrollController.dispose();
     _movieFavouriteBloc.close();
   }
 
@@ -46,27 +50,44 @@ class _FavouriteMovieScreenState extends State<FavouriteMovieScreen> {
                   create: (context) => _movieFavouriteBloc,
                   child: BlocBuilder<MovieFavouriteBloc, MovieFavouriteState>(
                       builder: (context, state) {
-                    if (state is FavouriteMovieLoaded) {
-                      if (state.movieList.isEmpty) {
+                        if (state is FavouriteMovieLoaded) {
+                          if (_movieFavouriteBloc.movieList.isEmpty) {
                         return EmptyListBackGroundWidget(
                           imagePath: 'assets/svgs/no_favourite_movie.svg',
                           message: TranslationConstants.favouriteNoData
                               .translate(context),
                         );
                       } else {
-                        return FavouriteListResponseWidget(
-                            movieList: state.movieList);
+                        if (_movieFavouriteBloc.movieList.length <= 20 && _scrollController.hasClients) {
+                          _scrollController.jumpTo(0);
+                        }
+                        return NotificationListener<ScrollNotification>(
+                            onNotification: (ScrollNotification sn) {
+                              if (sn is ScrollUpdateNotification &&
+                                  sn.metrics.pixels ==
+                                      sn.metrics.maxScrollExtent) {
+                                if (_movieFavouriteBloc.hasMorePage) {
+                                  _movieFavouriteBloc
+                                      .add(LoadFavouriteMovieEvent());
+                                }
+                              }
+                              return true;
+                            },
+                            child: MovieListResponseWidget(
+                                scrollController: _scrollController,
+                                screenName: RouteList.FAVOURITE_SCREEN,
+                                movieList: _movieFavouriteBloc.movieList));
                       }
                     } else if (state is FavouriteMovieLoadError) {
-                      return EmptyListBackGroundWidget(
-                        imagePath: 'assets/svgs/search_error.svg',
-                        message: TranslationConstants.somethingWentWrong
-                            .translate(context),
-                      );
-                    } else {
-                      return const SizedBox.shrink();
-                    }
-                  })))
+                          return EmptyListBackGroundWidget(
+                            imagePath: 'assets/svgs/search_error.svg',
+                            message: TranslationConstants.somethingWentWrong
+                                .translate(context),
+                          );
+                        } else {
+                          return const SizedBox.shrink();
+                        }
+                      })))
         ],
       ),
     );

@@ -7,4 +7,5 @@ class RouteList {
   static const String WATCH_TRAILER_SCREEN = '/watch-trailer';
   static const String FAVOURITE_SCREEN = '/favourite';
   static const String SEARCH_SCREEN = '/search';
+  static const String ALL_MOVIE_SCREEN = '/all-movie';
 }

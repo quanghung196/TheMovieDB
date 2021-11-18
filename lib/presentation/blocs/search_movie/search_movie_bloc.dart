@@ -14,6 +14,29 @@ class SearchMovieBloc extends Bloc<SearchMovieEvent, SearchMovieState> {
   final GetQueryMovieListUseCase getQueryMovieListUseCase;
   final LoadingBloc loadingBloc;
 
+  static const int MAX_ITEM_IN_ONE_PAGE = 20;
+
+  List<MovieEntity> movieList = [];
+  int initializePage = 1;
+  bool hasMorePage = false;
+
+  int increasePageByOne() => initializePage++;
+
+  void executeLoadMore(List<MovieEntity> movieList) {
+    if (movieList.length < MAX_ITEM_IN_ONE_PAGE) {
+      hasMorePage = false;
+    } else {
+      hasMorePage = true;
+      increasePageByOne();
+    }
+  }
+
+  void refresh() {
+    initializePage = 1;
+    movieList.clear();
+    hasMorePage = false;
+  }
+
   SearchMovieBloc(
       {required this.loadingBloc, required this.getQueryMovieListUseCase})
       : super(SearchMovieInitial());
@@ -24,11 +47,12 @@ class SearchMovieBloc extends Bloc<SearchMovieEvent, SearchMovieState> {
       loadingBloc.add(StartLoadingEvent());
       await Future.delayed(const Duration(milliseconds: 2000));
       final moviesQueryListEither = await getQueryMovieListUseCase(
-          GetQueryMovieListParam(query: event.queryText));
+          GetQueryMovieListParam(query: event.queryText, page: initializePage));
       yield moviesQueryListEither
           .fold((error) => SearchMovieError(appErrorType: error.appErrorType),
               (response) {
-        //log(response.toString());
+        movieList.addAll(response);
+        executeLoadMore(response);
         return SearchMovieLoaded(
             movieList: response, movieSearched: event.queryText);
       });

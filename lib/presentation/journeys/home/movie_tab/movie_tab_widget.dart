@@ -26,7 +26,7 @@ class _MovieTabWidgetState extends State<MovieTabWidget>
   @override
   void initState() {
     super.initState();
-    movieTabBloc.add(MovieTabChangedEvent(_currentTabIndex));
+    movieTabBloc.add(MovieTabChangedEvent(currentTabIndex: _currentTabIndex));
   }
 
   @override
@@ -64,7 +64,10 @@ class _MovieTabWidgetState extends State<MovieTabWidget>
                         null,
                         onButtonPressed: () => _onTabTapped(_currentTabIndex),
                       )
-                    : MovieTabItemListWidget(movies: state.movies),
+                    : MovieTabItemListWidget(
+                        movies: state.movies,
+                        currentTabIndex: _currentTabIndex,
+                      ),
               ),
             if (state is MovieTabLoadedError)
               Expanded(
@@ -80,7 +83,7 @@ class _MovieTabWidgetState extends State<MovieTabWidget>
   }
 
   void _onTabTapped(int tabIndex) {
-    movieTabBloc.add(MovieTabChangedEvent(tabIndex));
+    movieTabBloc.add(MovieTabChangedEvent(currentTabIndex: tabIndex));
     _currentTabIndex = tabIndex;
   }
 }

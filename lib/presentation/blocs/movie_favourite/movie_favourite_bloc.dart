@@ -31,6 +31,29 @@ class MovieFavouriteBloc
   final AppSettingRepository appSettingRepository;
   final LoadingBloc loadingBloc;
 
+  static const int MAX_ITEM_IN_ONE_PAGE = 20;
+
+  List<MovieEntity> movieList = [];
+  int initializePage = 1;
+  bool hasMorePage = false;
+
+  int increasePageByOne() => initializePage++;
+
+  void executeLoadMore(List<MovieEntity> movieList) {
+    if (movieList.length < MAX_ITEM_IN_ONE_PAGE) {
+      hasMorePage = false;
+    } else {
+      hasMorePage = true;
+      increasePageByOne();
+    }
+  }
+
+  void refresh() {
+    initializePage = 1;
+    movieList.clear();
+    hasMorePage = false;
+  }
+
   MovieFavouriteBloc(
       {required this.postFavouriteMovieStatusUseCase,
       required this.getMovieAccountStateUseCase,
@@ -64,12 +87,33 @@ class MovieFavouriteBloc
       loadingBloc.add(StartLoadingEvent());
       await Future.delayed(const Duration(milliseconds: 2000));
       if (appSettingRepository.getAccountID() != 0) {
-        yield* _fetchFavouriteMovieFromApi(event.page);
+        yield* _fetchFavouriteMovieFromApi();
       } else {
         yield* _fetchFavouriteMovieFromDB();
       }
       loadingBloc.add(FinishLoadingEvent());
     }
+  }
+
+  Stream<MovieFavouriteState> _fetchFavouriteMovieFromApi() async* {
+    final movieListResponse = await getFavouriteMovieUseCase(
+        GetFavouriteMovieParam(page: initializePage));
+    yield movieListResponse.fold(
+        (error) => FavouriteMovieLoadError(appErrorType: error.appErrorType),
+        (response) {
+      movieList.addAll(response);
+      executeLoadMore(response);
+      return FavouriteMovieLoaded(response);
+    });
+  }
+
+  Stream<MovieFavouriteState> _fetchFavouriteMovieFromDB() async* {
+    final movieList = await getFavouriteMovieFromDBUseCase(NoParams());
+    yield movieList.fold(
+        (error) => FavouriteMovieLoadError(appErrorType: error.appErrorType),
+        (response) {
+      return FavouriteMovieLoaded(response);
+    });
   }
 
   Stream<MovieFavouriteState> _toggleFavouriteMovieFromDB(
@@ -93,25 +137,6 @@ class MovieFavouriteBloc
           movieID: movieEntity.id, isFavourite: !isMovieFavourited));
     }
     yield* _checkIfMovieIsFavouritedFromApi(movieEntity.id);
-  }
-
-  Stream<MovieFavouriteState> _fetchFavouriteMovieFromDB() async* {
-    final movieList = await getFavouriteMovieFromDBUseCase(NoParams());
-    yield movieList.fold(
-        (error) => FavouriteMovieLoadError(appErrorType: error.appErrorType),
-        (response) {
-      return FavouriteMovieLoaded(response);
-    });
-  }
-
-  Stream<MovieFavouriteState> _fetchFavouriteMovieFromApi(int page) async* {
-    final movieList =
-        await getFavouriteMovieUseCase(GetFavouriteMovieParam(page: page));
-    yield movieList.fold(
-        (error) => FavouriteMovieLoadError(appErrorType: error.appErrorType),
-        (response) {
-      return FavouriteMovieLoaded(response);
-    });
   }
 
   Stream<MovieFavouriteState> _checkIfMovieIsFavouritedFromDB(

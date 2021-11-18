@@ -2,16 +2,11 @@ part of 'movie_favourite_bloc.dart';
 
 abstract class MovieFavouriteEvent extends Equatable {
   const MovieFavouriteEvent();
+
+  List<Object?> get props => [];
 }
 
-class LoadFavouriteMovieEvent extends MovieFavouriteEvent {
-  final int page;
-
-  const LoadFavouriteMovieEvent({required this.page});
-
-  @override
-  List<Object?> get props => [page];
-}
+class LoadFavouriteMovieEvent extends MovieFavouriteEvent {}
 
 class ToggleFavouriteMovieEvent extends MovieFavouriteEvent {
   final MovieEntity movieEntity;

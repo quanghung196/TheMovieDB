@@ -3,8 +3,8 @@ import 'package:custom_listview_with_json_data/common/extensions/string_extensio
 import 'package:custom_listview_with_json_data/di/get_it.dart';
 import 'package:custom_listview_with_json_data/presentation/blocs/search_movie/search_movie_bloc.dart';
 import 'package:custom_listview_with_json_data/presentation/journeys/search_movie/search_bar_widget.dart';
-import 'package:custom_listview_with_json_data/presentation/journeys/search_movie/search_result_list_widget.dart';
 import 'package:custom_listview_with_json_data/presentation/widgets/empty_list_back_ground_widget.dart';
+import 'package:custom_listview_with_json_data/presentation/widgets/movie_list_response_widget.dart';
 import 'package:custom_listview_with_json_data/presentation/widgets/simple_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,16 +20,22 @@ class SearchMovieScreen extends StatefulWidget {
 
 class _SearchMovieScreenState extends State<SearchMovieScreen> {
   late SearchMovieBloc _searchMovieBloc;
+  late TextEditingController _searchBarController;
+  late ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController();
+    _searchBarController = TextEditingController();
     _searchMovieBloc = getItInstance<SearchMovieBloc>();
   }
 
   @override
   void dispose() {
     super.dispose();
+    _scrollController.dispose();
+    _searchBarController.clear();
     _searchMovieBloc.close();
   }
 
@@ -44,7 +50,7 @@ class _SearchMovieScreenState extends State<SearchMovieScreen> {
             SimpleAppBar(
                 appBarTitle:
                     TranslationConstants.findYourMovie.translate(context)),
-            const SearchBarWidget(),
+            SearchBarWidget(searchBarController: _searchBarController),
             Expanded(child: BlocBuilder<SearchMovieBloc, SearchMovieState>(
                 builder: (context, state) {
               if (state is SearchMovieInitial) {
@@ -54,7 +60,7 @@ class _SearchMovieScreenState extends State<SearchMovieScreen> {
                       TranslationConstants.searchWelcome.translate(context),
                 );
               } else if (state is SearchMovieLoaded) {
-                if (state.movieList.isEmpty) {
+                if (_searchMovieBloc.movieList.isEmpty) {
                   return EmptyListBackGroundWidget(
                     imagePath: 'assets/svgs/no_data_found.svg',
                     message: sprintf(
@@ -62,9 +68,24 @@ class _SearchMovieScreenState extends State<SearchMovieScreen> {
                         [state.movieSearched]),
                   );
                 } else {
-                  return SearchResultListWidget(
-                    movieList: state.movieList,
-                  );
+                  if (_searchMovieBloc.movieList.length <= 20 && _scrollController.hasClients) {
+                    _scrollController.jumpTo(0);
+                  }
+                  return NotificationListener<ScrollNotification>(
+                      onNotification: (ScrollNotification sn) {
+                        if (sn is ScrollUpdateNotification &&
+                            sn.metrics.pixels == sn.metrics.maxScrollExtent) {
+                          if (_searchMovieBloc.hasMorePage) {
+                            _searchMovieBloc.add(MovieQuerySubmitedEvent(
+                                queryText: _searchBarController.text));
+                          }
+                        }
+                        return true;
+                      },
+                      child: MovieListResponseWidget(
+                        movieList: _searchMovieBloc.movieList,
+                        scrollController: _scrollController,
+                      ));
                 }
               } else {
                 return EmptyListBackGroundWidget(
