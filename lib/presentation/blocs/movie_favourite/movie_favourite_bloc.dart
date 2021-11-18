@@ -108,10 +108,11 @@ class MovieFavouriteBloc
   }
 
   Stream<MovieFavouriteState> _fetchFavouriteMovieFromDB() async* {
-    final movieList = await getFavouriteMovieFromDBUseCase(NoParams());
-    yield movieList.fold(
+    final movieListResponse = await getFavouriteMovieFromDBUseCase(NoParams());
+    yield movieListResponse.fold(
         (error) => FavouriteMovieLoadError(appErrorType: error.appErrorType),
         (response) {
+      movieList.addAll(response);
       return FavouriteMovieLoaded(response);
     });
   }
