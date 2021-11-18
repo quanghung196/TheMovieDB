@@ -130,7 +130,8 @@ Future init() async {
   getItInstance.registerFactory(() => MovieTabBloc(
       getPlayingNowMovieUseCase: getItInstance(),
       getPopularMovieUseCase: getItInstance(),
-      getUpcomingMovieUseCase: getItInstance()));
+      getUpcomingMovieUseCase: getItInstance(),
+      loadingBloc: getItInstance()));
 
   getItInstance.registerFactory(
       () => MovieCastListBloc(getMovieCastListUseCase: getItInstance()));

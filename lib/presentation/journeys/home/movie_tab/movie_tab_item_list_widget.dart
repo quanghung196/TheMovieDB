@@ -1,8 +1,10 @@
+import 'package:custom_listview_with_json_data/common/constants/route_constant.dart';
 import 'package:custom_listview_with_json_data/common/constants/size_constants.dart';
 import 'package:custom_listview_with_json_data/common/constants/translation_constants.dart';
 import 'package:custom_listview_with_json_data/common/extensions/size_extensions.dart';
 import 'package:custom_listview_with_json_data/common/extensions/string_extensions.dart';
 import 'package:custom_listview_with_json_data/domain/entities/movie_entity.dart';
+import 'package:custom_listview_with_json_data/domain/entities/screen_agruments/view_all_movie_screen_agrument.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,8 +12,10 @@ import 'movie_tab_card_widget.dart';
 
 class MovieTabItemListWidget extends StatelessWidget {
   final List<MovieEntity> movies;
+  final int currentTabIndex;
 
-  const MovieTabItemListWidget({Key? key, required this.movies})
+  const MovieTabItemListWidget(
+      {Key? key, required this.movies, required this.currentTabIndex})
       : super(key: key);
 
   @override
@@ -34,7 +38,12 @@ class MovieTabItemListWidget extends StatelessWidget {
               padding: EdgeInsets.only(right: Sizes.dimen_14.w),
               child: Center(
                 child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                          RouteList.ALL_MOVIE_SCREEN,
+                          arguments: ViewAllMovieScreenAgrument(
+                              currentTab: currentTabIndex));
+                    },
                     child: Text(
                       TranslationConstants.viewMore.translate(context),
                       maxLines: 1,

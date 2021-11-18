@@ -11,17 +11,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../widgets/custom_chip_view.dart';
+import 'custom_chip_view.dart';
 
-class FavouriteListResponseWidget extends StatelessWidget {
+class MovieListResponseWidget extends StatelessWidget {
   final List<MovieEntity> movieList;
+  final String screenName;
+  final ScrollController? scrollController;
 
-  const FavouriteListResponseWidget({Key? key, required this.movieList})
+  const MovieListResponseWidget({Key? key, required this.movieList, this.screenName = '', this.scrollController})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+      controller: scrollController,
       itemCount: movieList.length,
       separatorBuilder: (BuildContext context, int index) {
         return SizedBox(
@@ -36,8 +39,11 @@ class FavouriteListResponseWidget extends StatelessWidget {
                     arguments:
                         MovieDetaiScreenAgrument(movieID: movieList[index].id))
                 .then((value) {
-              BlocProvider.of<MovieFavouriteBloc>(context)
-                  .add(const LoadFavouriteMovieEvent(page: 1));
+                  if(screenName == RouteList.FAVOURITE_SCREEN){
+                    BlocProvider.of<MovieFavouriteBloc>(context).refresh();
+                    BlocProvider.of<MovieFavouriteBloc>(context)
+                        .add(LoadFavouriteMovieEvent());
+                  }
             });
           },
           child: Container(
@@ -65,10 +71,14 @@ class FavouriteListResponseWidget extends StatelessWidget {
                     children: [
                       Text(
                         movieList[index].title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.whiteTitle,
                       ),
                       Text(
                         movieList[index].getMovieCategory(),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.miniGreySubtitle1,
                       ),
                       Expanded(

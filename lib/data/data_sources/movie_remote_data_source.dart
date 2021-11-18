@@ -9,14 +9,13 @@ import 'package:custom_listview_with_json_data/domain/repositories/app_setting_r
 import 'package:sprintf/sprintf.dart';
 
 abstract class MovieRemoteDataSource {
-  //Future<List<MovieDetail>> getPopularMovieByPage(int page);
-  Future<List<MovieModel>> getPopularMovie();
+  Future<List<MovieModel>> getPopularMovie(int page);
 
   Future<List<MovieModel>> getTrendingMovie();
 
-  Future<List<MovieModel>> getPlayingNowMovie();
+  Future<List<MovieModel>> getPlayingNowMovie(int page);
 
-  Future<List<MovieModel>> getUpcomingMovieMovie();
+  Future<List<MovieModel>> getUpcomingMovieMovie(int page);
 
   Future<MovieDetailModel> getMovieDetail(int movieID);
 
@@ -24,7 +23,7 @@ abstract class MovieRemoteDataSource {
 
   Future<List<VideoModel>> getMovieVideoList(int movieID);
 
-  Future<List<MovieModel>> getQueryMovieList(String query);
+  Future<List<MovieModel>> getQueryMovieList(String query, int page);
 
   Future<List<MovieModel>> getFavouriteMovie(int page);
 
@@ -39,15 +38,10 @@ class MovieRemoteDataSourceImpl extends MovieRemoteDataSource {
 
   MovieRemoteDataSourceImpl(this._client, this._appSettingRepository);
 
-  // @override
-  // Future<List<MovieDetail>> getPopularMovieByPage(int page) {
-  //   // TODO: implement getPopularMovieByPage
-  //   throw UnimplementedError();
-  // }
-
   @override
-  Future<List<MovieModel>> getPopularMovie() async {
-    final response = await _client.get(ApiConstants.GET_POPULAR_MOVIE_PATH);
+  Future<List<MovieModel>> getPopularMovie(int page) async {
+    final response = await _client
+        .get(ApiConstants.GET_POPULAR_MOVIE_PATH, params: {'page': page});
     return MovieResponse.fromJson(response).movieList;
   }
 
@@ -58,14 +52,16 @@ class MovieRemoteDataSourceImpl extends MovieRemoteDataSource {
   }
 
   @override
-  Future<List<MovieModel>> getPlayingNowMovie() async {
-    final response = await _client.get(ApiConstants.GET_PLAYING_NOW_MOVIE_PATH);
+  Future<List<MovieModel>> getPlayingNowMovie(int page) async {
+    final response = await _client
+        .get(ApiConstants.GET_PLAYING_NOW_MOVIE_PATH, params: {'page': page});
     return MovieResponse.fromJson(response).movieList;
   }
 
   @override
-  Future<List<MovieModel>> getUpcomingMovieMovie() async {
-    final response = await _client.get(ApiConstants.GET_UPCOMING_MOVIE_PATH);
+  Future<List<MovieModel>> getUpcomingMovieMovie(int page) async {
+    final response = await _client
+        .get(ApiConstants.GET_UPCOMING_MOVIE_PATH, params: {'page': page});
     return MovieResponse.fromJson(response).movieList;
   }
 
@@ -91,11 +87,9 @@ class MovieRemoteDataSourceImpl extends MovieRemoteDataSource {
   }
 
   @override
-  Future<List<MovieModel>> getQueryMovieList(String query) async {
-    final response =
-        await _client.get(ApiConstants.GET_MOVIE_SEARCH_PATH, params: {
-      'query': query /*, 'language': 'vi'*/
-    });
+  Future<List<MovieModel>> getQueryMovieList(String query, int page) async {
+    final response = await _client.get(ApiConstants.GET_MOVIE_SEARCH_PATH,
+        params: {'query': query, 'page': page});
     return MovieResponse.fromJson(response).movieList;
   }
 

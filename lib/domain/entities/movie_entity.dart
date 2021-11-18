@@ -61,7 +61,9 @@ class MovieEntity extends Equatable {
     for (int category in genreIds) {
       movieCategory = movieCategory + ', ' + (movieCategoryMap[category] ?? '');
     }
-    return movieCategory.substring(2, movieCategory.length);
+    return movieCategory.isNotEmpty
+        ? movieCategory.substring(2, movieCategory.length)
+        : '';
   }
 
   String loadMoviePosterPath() {
@@ -73,7 +75,7 @@ class MovieEntity extends Equatable {
   }
 
   String getYearOfMovie() {
-    return releaseDate.substring(0, 4);
+    return releaseDate.isNotEmpty ? releaseDate.substring(0, 4) : '';
   }
 
   @override

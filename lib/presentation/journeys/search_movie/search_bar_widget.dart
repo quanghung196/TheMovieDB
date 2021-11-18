@@ -8,8 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchBarWidget extends StatefulWidget {
+
+  final TextEditingController searchBarController;
+
   const SearchBarWidget({
-    Key? key,
+    Key? key, required this.searchBarController
   }) : super(key: key);
 
   @override
@@ -17,26 +20,13 @@ class SearchBarWidget extends StatefulWidget {
 }
 
 class _SearchBarWidgetState extends State<SearchBarWidget> {
-  late TextEditingController _searchBarController;
 
   static const styleActive = TextStyle(color: Colors.white);
   static const styleHint = TextStyle(color: AppColor.hint);
 
   @override
-  void initState() {
-    super.initState();
-    _searchBarController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _searchBarController.clear();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final style = _searchBarController.text.isEmpty ? styleHint : styleActive;
+    final style = widget.searchBarController.text.isEmpty ? styleHint : styleActive;
 
     return Container(
       alignment: Alignment.center,
@@ -50,10 +40,10 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
       ),
       padding: EdgeInsets.symmetric(horizontal: Sizes.dimen_16.w),
       child: TextField(
-        controller: _searchBarController,
+        controller: widget.searchBarController,
         decoration: InputDecoration(
           icon: Icon(Icons.search, color: style.color),
-          suffixIcon: _searchBarController.text.isNotEmpty
+          suffixIcon: widget.searchBarController.text.isNotEmpty
               ? GestureDetector(
                   child: Icon(
                     Icons.close,
@@ -62,7 +52,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                   ),
                   onTap: () {
                     FocusScope.of(context).unfocus();
-                    _searchBarController.clear();
+                    widget.searchBarController.clear();
                   },
                 )
               : null,
@@ -75,6 +65,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
         onSubmitted: (value) {
           if (value.isNotEmpty) {
             FocusScope.of(context).unfocus();
+            BlocProvider.of<SearchMovieBloc>(context).refresh();
             BlocProvider.of<SearchMovieBloc>(context)
                 .add(MovieQuerySubmitedEvent(queryText: value));
           }
