@@ -57,7 +57,7 @@ class MovieEntity extends Equatable {
   };
 
   String movieVoteAverage() {
-    if(voteAverage == 0){
+    if (voteAverage == 0) {
       return 'NR';
     }
     return voteAverage.toString();

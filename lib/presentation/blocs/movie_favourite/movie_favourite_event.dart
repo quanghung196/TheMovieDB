@@ -11,9 +11,12 @@ class LoadFavouriteMovieEvent extends MovieFavouriteEvent {}
 class ToggleFavouriteMovieEvent extends MovieFavouriteEvent {
   final MovieEntity movieEntity;
   final bool isFavourite;
+  final BuildContext context;
 
   const ToggleFavouriteMovieEvent(
-      {required this.movieEntity, required this.isFavourite});
+      {required this.context,
+      required this.movieEntity,
+      required this.isFavourite});
 
   @override
   List<Object?> get props => [movieEntity, isFavourite];

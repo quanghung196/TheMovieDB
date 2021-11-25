@@ -1,8 +1,11 @@
+import 'package:custom_listview_with_json_data/common/constants/translation_constants.dart';
+import 'package:custom_listview_with_json_data/common/extensions/string_extensions.dart';
 import 'package:custom_listview_with_json_data/di/get_it.dart';
 import 'package:custom_listview_with_json_data/presentation/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:custom_listview_with_json_data/presentation/blocs/movie_carousel/movie_carousel_bloc.dart';
 import 'package:custom_listview_with_json_data/presentation/blocs/movie_tab/movie_tab_bloc.dart';
 import 'package:custom_listview_with_json_data/presentation/journeys/drawer/navigation_drawer.dart';
+import 'package:custom_listview_with_json_data/presentation/journeys/notification/notification_api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,6 +46,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    NotificationApi.showScheduledNotification(
+        title: TranslationConstants.remindNotiTitle.translate(context),
+        body: TranslationConstants.remindNotiDescription.translate(context),
+        scheduledDate: DateTime.now().add(const Duration(seconds: 1)));
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(

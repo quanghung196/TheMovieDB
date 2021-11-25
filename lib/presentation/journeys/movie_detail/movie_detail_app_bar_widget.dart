@@ -42,8 +42,20 @@ class MovieDetailAppBarWidget extends StatelessWidget {
                       BlocProvider.of<MovieFavouriteBloc>(context).add(
                           ToggleFavouriteMovieEvent(
                               movieEntity: movieDetailEntity.toMovieEntity(),
-                              isFavourite: state.isFavouriteMovie));
+                              isFavourite: state.isFavouriteMovie,
+                              context: context));
                     },
+                    icon: Icon(
+                      state.isFavouriteMovie
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      color: Colors.white,
+                      size: Sizes.dimen_12.h,
+                    ),
+                  );
+                } else if (state is IsFavouriteMovieTemp) {
+                  return IconButton(
+                    onPressed: () {},
                     icon: Icon(
                       state.isFavouriteMovie
                           ? Icons.favorite

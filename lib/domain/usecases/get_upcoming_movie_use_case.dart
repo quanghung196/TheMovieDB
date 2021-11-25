@@ -6,7 +6,8 @@ import 'package:dartz/dartz.dart';
 
 import 'get_popular_movie_use_case.dart';
 
-class GetUpcomingMovieUseCase extends UseCase<List<MovieEntity>, GetMovieParam> {
+class GetUpcomingMovieUseCase
+    extends UseCase<List<MovieEntity>, GetMovieParam> {
   final MovieRepository _movieRepository;
 
   GetUpcomingMovieUseCase(this._movieRepository);

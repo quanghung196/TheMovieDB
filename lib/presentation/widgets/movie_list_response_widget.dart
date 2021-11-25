@@ -18,7 +18,11 @@ class MovieListResponseWidget extends StatelessWidget {
   final String screenName;
   final ScrollController? scrollController;
 
-  const MovieListResponseWidget({Key? key, required this.movieList, this.screenName = '', this.scrollController})
+  const MovieListResponseWidget(
+      {Key? key,
+      required this.movieList,
+      this.screenName = '',
+      this.scrollController})
       : super(key: key);
 
   @override
@@ -39,11 +43,11 @@ class MovieListResponseWidget extends StatelessWidget {
                     arguments:
                         MovieDetaiScreenAgrument(movieID: movieList[index].id))
                 .then((value) {
-                  if(screenName == RouteList.FAVOURITE_SCREEN){
-                    BlocProvider.of<MovieFavouriteBloc>(context).refresh();
-                    BlocProvider.of<MovieFavouriteBloc>(context)
-                        .add(LoadFavouriteMovieEvent());
-                  }
+              if (screenName == RouteList.FAVOURITE_SCREEN) {
+                BlocProvider.of<MovieFavouriteBloc>(context).refresh();
+                BlocProvider.of<MovieFavouriteBloc>(context)
+                    .add(LoadFavouriteMovieEvent());
+              }
             });
           },
           child: Container(
@@ -95,8 +99,7 @@ class MovieListResponseWidget extends StatelessWidget {
                         child: Row(
                           children: [
                             CustomChipView(
-                                labelText:
-                                    movieList[index].movieVoteAverage(),
+                                labelText: movieList[index].movieVoteAverage(),
                                 isContainIcon: true),
                             SizedBox(
                               width: Sizes.dimen_10.w,

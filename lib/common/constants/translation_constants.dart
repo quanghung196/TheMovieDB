@@ -46,5 +46,9 @@ class TranslationConstants {
   static const String searchNoData = 'searchNoData';
   static const String favouriteNoData = 'favouriteNoData';
   static const String welcomeBack = 'welcomeBack';
+  static const String remindNotiTitle = 'remindNotiTitle';
+  static const String remindNotiDescription = 'remindNotiDescription';
   static const String or = 'or';
+  static const String movieFavourited = 'movieFavourited';
+  static const String movieUnfavourited = 'movieUnfavourited';
 }

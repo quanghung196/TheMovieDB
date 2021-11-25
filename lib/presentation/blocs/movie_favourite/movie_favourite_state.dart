@@ -27,6 +27,15 @@ class FavouriteMovieLoadError extends MovieFavouriteState {
   List<Object> get props => [appErrorType];
 }
 
+class IsFavouriteMovieTemp extends MovieFavouriteState {
+  final bool isFavouriteMovie;
+
+  const IsFavouriteMovieTemp(this.isFavouriteMovie);
+
+  @override
+  List<Object> get props => [isFavouriteMovie];
+}
+
 class IsFavouriteMovie extends MovieFavouriteState {
   final bool isFavouriteMovie;
 

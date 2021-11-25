@@ -9,21 +9,22 @@
         <path class="st1" d="m13.865,23.045l0,13.52c0,1.03 0.83,1.86 1.86,1.86l6.68,0" fill="none"
             id="svg_2" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round"
             stroke-miterlimit="10" stroke-width="0.7" />
-        <path class="st1" d="m34.135,23.045l0,13.52c0,1.03 -0.83,1.86 -1.85,1.86l-6.69,0" fill="none"
-            id="svg_3" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round"
+        <path class="st1" d="m34.135,23.045l0,13.52c0,1.03 -0.83,1.86 -1.85,1.86l-6.69,0"
+            fill="none" id="svg_3" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round"
             stroke-miterlimit="10" stroke-width="0.7" />
         <polyline class="st1" fill="none" id="svg_4"
-            points="34.135,23.045 37.625,21.235 23.985,9.575 10.375,21.235 13.865,23.045   " stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round"
-            stroke-miterlimit="10"
+            points="34.135,23.045 37.625,21.235 23.985,9.575 10.375,21.235 13.865,23.045   "
+            stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
             stroke-width="0.7" />
         <polyline class="st1" fill="none" id="svg_5"
-            points="22.405,38.425 22.405,32.465 25.595,32.465 25.595,38.425   " stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round"
-            stroke-miterlimit="10" stroke-width="0.7" />
-        <line class="st1" fill="none" id="svg_6"
-            stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="0.7" x1="22.405"
+            points="22.405,38.425 22.405,32.465 25.595,32.465 25.595,38.425   " stroke="#ffffff"
+            stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
+            stroke-width="0.7" />
+        <line class="st1" fill="none" id="svg_6" stroke="#ffffff" stroke-linecap="round"
+            stroke-linejoin="round" stroke-miterlimit="10" stroke-width="0.7" x1="22.405"
             x2="17.48294" y1="13.21911" y2="17.58361" />
-        <line class="st1" fill="none" id="svg_7"
-            stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="0.7" x1="16.29157"
+        <line class="st1" fill="none" id="svg_7" stroke="#ffffff" stroke-linecap="round"
+            stroke-linejoin="round" stroke-miterlimit="10" stroke-width="0.7" x1="16.29157"
             x2="15.70495" y1="18.75067" y2="19.27611" />
     </g>
 </svg>

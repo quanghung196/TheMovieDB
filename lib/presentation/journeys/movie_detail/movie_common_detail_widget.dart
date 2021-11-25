@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:custom_listview_with_json_data/common/constants/size_constants.dart';
-import 'package:custom_listview_with_json_data/common/extensions/num_extensions.dart';
 import 'package:custom_listview_with_json_data/common/extensions/size_extensions.dart';
 import 'package:custom_listview_with_json_data/common/screenutil/screenutil.dart';
 import 'package:custom_listview_with_json_data/domain/entities/movie_detail_entity.dart';

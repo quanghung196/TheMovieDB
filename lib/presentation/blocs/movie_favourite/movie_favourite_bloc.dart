@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:custom_listview_with_json_data/common/constants/translation_constants.dart';
+import 'package:custom_listview_with_json_data/common/extensions/string_extensions.dart';
 import 'package:custom_listview_with_json_data/domain/entities/app_error.dart';
 import 'package:custom_listview_with_json_data/domain/entities/movie_entity.dart';
 import 'package:custom_listview_with_json_data/domain/entities/no_params.dart';
@@ -13,7 +15,10 @@ import 'package:custom_listview_with_json_data/domain/usecases/get_movie_account
 import 'package:custom_listview_with_json_data/domain/usecases/post_movie_favourite_status_use_case.dart';
 import 'package:custom_listview_with_json_data/domain/usecases/save_movie_to_db_use_case.dart';
 import 'package:custom_listview_with_json_data/presentation/blocs/loading/loading_bloc.dart';
+import 'package:custom_listview_with_json_data/presentation/journeys/notification/notification_api.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:sprintf/sprintf.dart';
 
 part 'movie_favourite_event.dart';
 part 'movie_favourite_state.dart';
@@ -78,7 +83,7 @@ class MovieFavouriteBloc
     } else if (event is ToggleFavouriteMovieEvent) {
       if (appSettingRepository.getAccountID() != 0) {
         yield* _toggleFavouriteMovieFromApi(
-            event.isFavourite, event.movieEntity);
+            event.isFavourite, event.movieEntity, event.context);
       } else {
         yield* _toggleFavouriteMovieFromDB(
             event.isFavourite, event.movieEntity);
@@ -129,14 +134,13 @@ class MovieFavouriteBloc
   }
 
   Stream<MovieFavouriteState> _toggleFavouriteMovieFromApi(
-      bool isMovieFavourited, MovieEntity movieEntity) async* {
-    if (isMovieFavourited) {
-      await postFavouriteMovieStatusUseCase(PostFavouriteMovieStatusParam(
-          movieID: movieEntity.id, isFavourite: !isMovieFavourited));
-    } else {
-      await postFavouriteMovieStatusUseCase(PostFavouriteMovieStatusParam(
-          movieID: movieEntity.id, isFavourite: !isMovieFavourited));
-    }
+      bool isMovieFavourited,
+      MovieEntity movieEntity,
+      BuildContext context) async* {
+    yield IsFavouriteMovieTemp(!isMovieFavourited);
+    await postFavouriteMovieStatusUseCase(PostFavouriteMovieStatusParam(
+        movieID: movieEntity.id, isFavourite: !isMovieFavourited));
+    _showNotification(movieEntity.title, isMovieFavourited, context);
     yield* _checkIfMovieIsFavouritedFromApi(movieEntity.id);
   }
 
@@ -160,5 +164,15 @@ class MovieFavouriteBloc
         (response) {
       return IsFavouriteMovie(response.favorite);
     });
+  }
+
+  void _showNotification(
+      String notiTitle, bool isMovieFavourite, BuildContext context) {
+    String notibody = isMovieFavourite
+        ? sprintf(TranslationConstants.movieUnfavourited.translate(context),
+            [notiTitle])
+        : sprintf(TranslationConstants.movieFavourited.translate(context),
+            [notiTitle]);
+    NotificationApi.showNotification(title: notiTitle, body: notibody);
   }
 }

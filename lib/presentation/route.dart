@@ -13,8 +13,7 @@ import 'journeys/search_movie/search_movie_screen.dart';
 import 'journeys/watch_trailer/watch_trailer_screen.dart';
 
 class Routes {
-  static Map<String, WidgetBuilder> getRoutes(RouteSettings routeSettings) =>
-      {
+  static Map<String, WidgetBuilder> getRoutes(RouteSettings routeSettings) => {
         RouteList.LOGIN_SCREEN: (context) => const LoginScreen(),
         RouteList.HOME_SCREEN: (context) => const HomeScreen(),
         RouteList.MOVIE_DETAIL_SCREEN: (context) => MovieDetaiScreen(

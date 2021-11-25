@@ -11,7 +11,8 @@ class MovieTabChangedEvent extends MovieTabEvent {
   final int currentTabIndex;
   final bool hasLoadMore;
 
-  const MovieTabChangedEvent({required this.currentTabIndex, this.hasLoadMore = false});
+  const MovieTabChangedEvent(
+      {required this.currentTabIndex, this.hasLoadMore = false});
 
   @override
   List<Object?> get props => [currentTabIndex];
