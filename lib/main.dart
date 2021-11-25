@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:custom_listview_with_json_data/presentation/journeys/notification/notification_api.dart';
 import 'package:custom_listview_with_json_data/presentation/movie_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,5 +22,6 @@ void main() async {
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDir.path);
   Hive.registerAdapter(MovieEntityAdapter());
+  NotificationApi.init(initScheduled: true);
   runApp(const TheMovieDBApp());
 }

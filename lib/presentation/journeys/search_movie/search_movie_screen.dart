@@ -68,7 +68,8 @@ class _SearchMovieScreenState extends State<SearchMovieScreen> {
                         [state.movieSearched]),
                   );
                 } else {
-                  if (_searchMovieBloc.movieList.length <= 20 && _scrollController.hasClients) {
+                  if (_searchMovieBloc.movieList.length <= 20 &&
+                      _scrollController.hasClients) {
                     _scrollController.jumpTo(0);
                   }
                   return NotificationListener<ScrollNotification>(

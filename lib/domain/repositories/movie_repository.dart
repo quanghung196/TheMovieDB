@@ -22,7 +22,8 @@ abstract class MovieRepository {
 
   Future<Either<AppError, List<VideoEntity>>> getMovieVideoList(int movieID);
 
-  Future<Either<AppError, List<MovieEntity>>> getQueryMovieList(String query, int page);
+  Future<Either<AppError, List<MovieEntity>>> getQueryMovieList(
+      String query, int page);
 
   Future<Either<AppError, List<MovieEntity>>> getFavouriteMovie(int page);
 

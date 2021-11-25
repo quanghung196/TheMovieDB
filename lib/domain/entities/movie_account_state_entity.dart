@@ -1,5 +1,3 @@
-
-
 class MovieAccountStateEntity {
   final int id;
   final bool favorite;

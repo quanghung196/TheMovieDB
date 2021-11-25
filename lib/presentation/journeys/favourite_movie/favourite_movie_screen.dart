@@ -50,15 +50,16 @@ class _FavouriteMovieScreenState extends State<FavouriteMovieScreen> {
                   create: (context) => _movieFavouriteBloc,
                   child: BlocBuilder<MovieFavouriteBloc, MovieFavouriteState>(
                       builder: (context, state) {
-                        if (state is FavouriteMovieLoaded) {
-                          if (_movieFavouriteBloc.movieList.isEmpty) {
+                    if (state is FavouriteMovieLoaded) {
+                      if (_movieFavouriteBloc.movieList.isEmpty) {
                         return EmptyListBackGroundWidget(
                           imagePath: 'assets/svgs/no_favourite_movie.svg',
                           message: TranslationConstants.favouriteNoData
                               .translate(context),
                         );
                       } else {
-                        if (_movieFavouriteBloc.movieList.length <= 20 && _scrollController.hasClients) {
+                        if (_movieFavouriteBloc.movieList.length <= 20 &&
+                            _scrollController.hasClients) {
                           _scrollController.jumpTo(0);
                         }
                         return NotificationListener<ScrollNotification>(
@@ -79,15 +80,15 @@ class _FavouriteMovieScreenState extends State<FavouriteMovieScreen> {
                                 movieList: _movieFavouriteBloc.movieList));
                       }
                     } else if (state is FavouriteMovieLoadError) {
-                          return EmptyListBackGroundWidget(
-                            imagePath: 'assets/svgs/search_error.svg',
-                            message: TranslationConstants.somethingWentWrong
-                                .translate(context),
-                          );
-                        } else {
-                          return const SizedBox.shrink();
-                        }
-                      })))
+                      return EmptyListBackGroundWidget(
+                        imagePath: 'assets/svgs/search_error.svg',
+                        message: TranslationConstants.somethingWentWrong
+                            .translate(context),
+                      );
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  })))
         ],
       ),
     );

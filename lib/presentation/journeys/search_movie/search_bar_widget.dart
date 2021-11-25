@@ -8,25 +8,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchBarWidget extends StatefulWidget {
-
   final TextEditingController searchBarController;
 
-  const SearchBarWidget({
-    Key? key, required this.searchBarController
-  }) : super(key: key);
+  const SearchBarWidget({Key? key, required this.searchBarController})
+      : super(key: key);
 
   @override
   _SearchBarWidgetState createState() => _SearchBarWidgetState();
 }
 
 class _SearchBarWidgetState extends State<SearchBarWidget> {
-
   static const styleActive = TextStyle(color: Colors.white);
   static const styleHint = TextStyle(color: AppColor.hint);
 
   @override
   Widget build(BuildContext context) {
-    final style = widget.searchBarController.text.isEmpty ? styleHint : styleActive;
+    final style =
+        widget.searchBarController.text.isEmpty ? styleHint : styleActive;
 
     return Container(
       alignment: Alignment.center,

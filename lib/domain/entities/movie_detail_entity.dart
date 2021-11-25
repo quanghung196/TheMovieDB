@@ -44,7 +44,7 @@ class MovieDetailEntity {
   }
 
   String movieVoteAverage() {
-    if(voteAverage == 0){
+    if (voteAverage == 0) {
       return 'NR';
     }
     return voteAverage.convertToPercentageString();

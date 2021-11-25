@@ -44,5 +44,9 @@
   "welcomeBack": "Welcome back!",
   "searchWelcome": "Find and enjoy your movies or TV shows. Wish you have great moments with TMDB!!!",
   "searchNoData": "Sorry, we couldn't find any movie called %s, please enter another keyword",
+  "movieFavourited": "%s is added to your favourite list",
+  "movieUnfavourited": "%s is removed from your favourite list",
+  "remindNotiDescription": "Join us for relaxing by enjoying movies",
+  "remindNotiTitle": "Have a hard working day?",
   "favouriteNoData": "There are no movies in your favorites list, search and save your favorite movies to your favorite movies list"
 }
