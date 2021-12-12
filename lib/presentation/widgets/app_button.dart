@@ -28,7 +28,6 @@ class AppButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(Sizes.dimen_20.w)),
       duration: const Duration(milliseconds: 200),
       curve: Curves.easeIn,
-      height: Sizes.dimen_16.h,
       padding: EdgeInsets.symmetric(horizontal: Sizes.dimen_16.w),
       child: TextButton(
         onPressed: onButtonPressed,
